@@ -1,5 +1,6 @@
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import defaults from "../../config/defaults";
 
 const options = {
   definition: {
@@ -10,8 +11,8 @@ const options = {
       version: "0.0.1",
     },
     servers: [
-      { url: "http://localhost:3000/" },
-      { url: "http://localhost:3000/" },
+      { url: defaults.dev, description: "Local | Development Server🚧" },
+      { url: defaults.prod, description: "Live Server🚀" },
     ],
     components: {
       securitySchemes: {

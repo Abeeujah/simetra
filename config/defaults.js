@@ -23,4 +23,6 @@ export default {
   privateKey: process.env.PRIVATE_KEY || readFileSync("private-key.pem"),
   publicKey: process.env.PUBLIC_KEY || readFileSync("public-key.pem"),
   environment: process.env.NODE_ENV,
+  prod: process.env.PROD_ROUTE,
+  dev: process.env.DEV_ROUTE,
 };
