@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export default {
-  port: +process.env.PORT,
+  port: +process.env.PORT || 3000,
   salt: +process.env.SALT,
   otpTokenTtl: +process.env.OTP_TOKEN_TTL,
   accessTokenTtl: +process.env.ACCESS_TOKEN_TTL,

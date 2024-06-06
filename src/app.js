@@ -20,6 +20,7 @@ app.use(cookieParser());
 
 // Routes
 app.use("/api", api);
+app.get("/", (req, res) => res.redirect("/api/docs"));
 app.get("/healthz", (req, res) => res.status(200).send("Ok"));
 
 export default app;
