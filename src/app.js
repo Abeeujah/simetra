@@ -4,6 +4,7 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import api from "./routes/routes.js";
+import { httpHealthzCheck } from "./controllers/healthz/healthz.controller.js";
 
 const app = express();
 
@@ -21,6 +22,6 @@ app.use(cookieParser());
 // Routes
 app.use("/api", api);
 app.get("/", (req, res) => res.redirect("/api/docs"));
-app.get("/healthz", (req, res) => res.status(200).send("Ok"));
+app.get("/healthz", httpHealthzCheck);
 
 export default app;

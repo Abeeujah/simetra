@@ -19,3 +19,26 @@ export async function mongoConnect() {
 export async function mongoDisconnect() {
   await mongoose.disconnect();
 }
+
+export async function getConnectionDetails() {
+  // Healthz check route documentation
+  // Check connection state directly
+  const connected = mongoose.connection.readyState === 1;
+
+  // Early return for disconnected state
+  if (!connected){
+    throw new Error("Database is disconnected");
+  }
+
+  try {
+    // Measure latency only if connected
+    const start = Date.now();
+    await mongoose.connection.db.command({ ping: 1 });
+    const end = Date.now();
+    const latency = end - start;
+    return { connected, latency: `${latency}ms` };
+  } catch (error) {
+    console.error("Error getting connection latency:", error);
+    throw new Error(error.message);
+  }
+}

@@ -6,13 +6,23 @@ const options = {
   definition: {
     openapi: "3.0.3",
     info: {
-      title: "E-Commerce?",
+      title: "Artemis | simetrA",
       description: "Interactive API documentation for an E-Commerce store.",
       version: "0.0.1",
+      contact: {
+        name: "Abeeujah",
+        url: "https://github.com/Abeeujah",
+        email: "abeeujah@gmail.com",
+      },
+      license: {
+        name: "Apache 2.0",
+        url: "https://www.apache.org/licenses/LICENSE-2.0.html",
+      },
+      termsOfService: "http://example.com/terms/",
     },
     servers: [
-      { url: defaults.dev, description: "Local | Development Server🚧" },
-      { url: defaults.prod, description: "Live Server🚀" },
+      { url: defaults.dev, description: "Local | Development Server 🚧" },
+      { url: defaults.prod, description: "Live Server 🚀" },
     ],
     components: {
       securitySchemes: {
@@ -25,7 +35,7 @@ const options = {
     },
     security: [{ bearerAuth: [] }],
   },
-  apis: ["/*.js"],
+  apis: ["**/*.js"],
 };
 
 const swaggerSpec = swaggerJsdoc(options);
