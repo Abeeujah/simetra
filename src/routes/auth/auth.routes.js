@@ -2,7 +2,10 @@ import { Router } from "express";
 import { httpForgotPassword } from "../../controllers/auth/forgot-password.controller.js";
 import { httpResetPassword } from "../../controllers/auth/reset-password.controller.js";
 import { httpSignIn } from "../../controllers/auth/signin.controller.js";
-import { httpSignUp } from "../../controllers/auth/signup.controller.js";
+import {
+  httpSignUp,
+  httpUpdateUserProfile,
+} from "../../controllers/auth/signup.controller.js";
 import { httpVerifyOTP } from "../../controllers/auth/verify-otp.controller.js";
 import {
   deserializeUser,
@@ -15,6 +18,11 @@ authRouter.post("/signup", httpSignUp);
 authRouter.post("/signin", httpSignIn);
 authRouter.post("/forgot-password", httpForgotPassword);
 authRouter.post("/verify-otp", httpVerifyOTP);
+authRouter.post(
+  "/update-profile",
+  [deserializeUser, requireUser],
+  httpUpdateUserProfile
+);
 authRouter.post(
   "/reset-password",
   [deserializeUser, requireUser],

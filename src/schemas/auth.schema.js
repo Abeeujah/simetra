@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { maxLengthMessage, minLengthMessage } from "../utils/validation.util.js";
+import {
+  maxLengthMessage,
+  minLengthMessage,
+} from "../utils/validation.util.js";
 
 export const signUpSchema = z.object({
   name: z
@@ -15,6 +18,9 @@ export const signUpSchema = z.object({
     .string()
     .min(7, minLengthMessage("Password", 7))
     .max(255, maxLengthMessage("Password", 255)),
+});
+
+export const profileSchema = z.object({
   gender: z.enum(["MALE", "FEMALE"]),
   address: z
     .string()

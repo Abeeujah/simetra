@@ -1,6 +1,7 @@
 // API Health Check
 /**
  * @openapi
+ * # Health check endpoint
  * /healthz:
  *  get:
  *      summary: Server health check.

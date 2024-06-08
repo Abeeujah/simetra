@@ -22,13 +22,27 @@ export async function createUser(userDto) {
   }
 }
 
+// Update user address, phone and type
+export async function updateProfile(id, dto) {
+  try {
+    const user = await UserModel.findByIdAndUpdate(id, dto);
+    if (!user) {
+      return false;
+    }
+    return user.toJSON();
+  } catch (error) {
+    console.error({ updateProfileError: error });
+    throw new Error(error.message);
+  }
+}
+
 // Find user by email
 export async function findUserByEmail(email, full) {
   try {
     const user = await UserModel.findOne({ email });
 
     if (full) {
-      return user;
+      return user.toJSON();
     }
 
     return { name: user.name, email };

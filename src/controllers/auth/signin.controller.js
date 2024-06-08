@@ -61,7 +61,7 @@ export async function httpSignIn(req, res) {
       success: true,
       message: "Login successful",
       data: {
-        user: { ...user.toJSON(), password: null },
+        user: { ...user, password: null },
         accessToken,
         refreshToken,
       },

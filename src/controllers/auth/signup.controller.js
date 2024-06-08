@@ -1,5 +1,5 @@
-import { signUpSchema } from "../../schemas/auth.schema.js";
-import { createUser } from "../../services/auth.services.js";
+import { profileSchema, signUpSchema } from "../../schemas/auth.schema.js";
+import { createUser, updateProfile } from "../../services/auth.services.js";
 import { hashPassword } from "../../utils/auth.bcrypt.js";
 import {
   accessTokenOptions,
@@ -23,7 +23,7 @@ export async function httpSignUp(req, res) {
     });
   }
 
-  const { name, email, password, address, gender, phone } = validation.data;
+  const { name, email, password } = validation.data;
 
   try {
     // Hash password
@@ -33,9 +33,6 @@ export async function httpSignUp(req, res) {
     const user = await createUser({
       name,
       email,
-      address,
-      gender,
-      phone,
       password: hash,
     });
 
@@ -69,5 +66,36 @@ export async function httpSignUp(req, res) {
     return res
       .status(clientError ? 400 : 500)
       .json({ success: false, message: error.message });
+  }
+}
+
+// Update profile Endpoint
+export async function httpUpdateUserProfile(req, res) {
+  const validation = profileSchema.safeParse(req.body);
+  if (!validation.success) {
+    const { errors } = validation.error;
+    console.error({ updateUserProfileError: errors });
+    const message = validationErrorBuilder(errors);
+    return res.status(400).json({
+      success: false,
+      message,
+    });
+  }
+  try {
+    const { id } = req.user;
+    const user = await updateProfile(id, validation.data);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User you're trying to update does not exist.",
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      message: "User updated successfully.",
+      data: { user: { ...user, password: null } },
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
   }
 }
