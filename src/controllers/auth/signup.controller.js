@@ -64,7 +64,7 @@ export async function httpSignUp(req, res) {
     console.error(error);
     const clientError = error.message.includes("already exists.");
     return res
-      .status(clientError ? 400 : 500)
+      .status(clientError ? 409 : 500)
       .json({ success: false, message: error.message });
   }
 }

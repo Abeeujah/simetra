@@ -2,26 +2,36 @@
  * @openapi
  * components:
  *  schemas:
+ *      # Email schema.
+ *      Email:
+ *          type: string
+ *          format: email
+ *          minLength: 5
+ *          maxLength: 5
+ *          description: Provisioned email address.
+ * 
+ *      # Password schema.
+ *      Password:
+ *          type: string
+ *          format: password
+ *          minLength: 7
+ *          maxLength: 255
+ *          description: Account password.
+ * 
  *      # User credentials schema.
  *      UserCredentials:
  *          type: object
  *          required:
- *              - name
  *              - email
  *              - password
  *          properties:
  *              email:
- *                  type: string
- *                  format: email
- *                  minLength: 5
- *                  maxLength: 255
+ *                  $ref: '#/components/schemas/Email'
  *                  description: The email address of the user creating an account.
  *              password:
- *                  type: string
- *                  format: password
- *                  minLength: 7
- *                  maxLength: 255
+ *                  $ref: '#/components/schemas/Password'
  *                  description: The password of the user creating an account.
+ * 
  *      # Signup schema.
  *      Signup:
  *          type: object
@@ -35,6 +45,7 @@
  *                  minLength: 3
  *                  maxLength: 255
  *                  description: The name of the user creating an account.
+ * 
  *      # Signin schema.
  *      Signin:
  *          $ref: '#/components/schemas/UserCredentials'
@@ -51,6 +62,7 @@
  *              message:
  *                  type: string
  *                  description: A human-readable explanation of the error.
+ * 
  *      # Success schema
  *      Success:
  *          type: object

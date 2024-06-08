@@ -41,6 +41,10 @@ export async function findUserByEmail(email, full) {
   try {
     const user = await UserModel.findOne({ email });
 
+    if (!user) {
+      return false;
+    }
+
     if (full) {
       return user.toJSON();
     }

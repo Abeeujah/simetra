@@ -4,6 +4,7 @@
  * # Health check endpoint
  * /healthz:
  *  get:
+ *      description: This endpoint provides a basic health check of the API service, including the database latency and connection status.
  *      summary: Server health check.
  *      tags: [Health]
  *      operationId: healthCheck

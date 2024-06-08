@@ -13,6 +13,7 @@
  *                  example:
  *                      email: kai@havertz.com
  *                      password: chelsea
+ * 
  *      # Signup requestBody
  *      Signup:
  *          description: Sign up to create an account.
@@ -25,4 +26,15 @@
  *                      name: Kai Havertz
  *                      email: kai@havertz.com
  *                      password: chelsea
+ * 
+ *      # Forgot-Password requestBody
+ *      ForgotPassword:
+ *          description: Initiate a password reset flow.
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Email'
+ *                  example:
+ *                      email: kai@havertz.com
  */
