@@ -29,7 +29,7 @@
  * 
  *      # Forgot-Password requestBody
  *      ForgotPassword:
- *          description: Initiate a password reset flow.
+ *          description: Provide your registered email address to initiate a password reset flow.
  *          required: true
  *          content:
  *              application/json:
@@ -37,4 +37,15 @@
  *                      $ref: '#/components/schemas/Email'
  *                  example:
  *                      email: kai@havertz.com
+ * 
+ *      # Verify OTP requestBody
+ *      VerifyOTP:
+ *          description: Provide the OTP sent to your email inbox.
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#components/schemas/OTP'
+ *                  example:
+ *                      otp: "36419"
  */

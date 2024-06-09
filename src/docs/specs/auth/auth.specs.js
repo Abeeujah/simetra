@@ -15,7 +15,7 @@
  *          '400':
  *              $ref: '#/components/responses/BadRequest'
  *          '409':
- *              $ref: '#/components/responses/InternalServerError'
+ *              $ref: '#/components/responses/AlreadyExists'
  *          '500':
  *              $ref: '#/components/responses/InternalServerError'
  * 
@@ -56,6 +56,27 @@
  *              $ref: '#components/responses/BadRequest'
  *          '404':
  *              $ref: '#components/responses/NotFound'
+ *          '500':
+ *              $ref: '#components/responses/InternalServerError'
+ * 
+ * # Verify OTP endpoint
+ * /api/auth/verify-otp:
+ *  post:
+ *      description: This endpoint allows users to verify a one-time password (OTP) that was previously sent to them (e.g., via SMS, email). A successful verification will typically grant access to a protected resource or action within your application.
+ *      summary: Verify One-Time Password.
+ *      tags: [Auth]
+ *      operationId: verifyOTP
+ *      requestBody:
+ *          $ref: '#components/requestBodies/VerifyOTP'
+ *      responses:
+ *          '200':
+ *              $ref: '#components/responses/Success'
+ *          '400':
+ *              $ref: '#components/responses/BadRequest'
+ *          '408':
+ *              $ref: '#components/responses/Expired'
+ *          '409':
+ *              $ref: '#components/responses/AlreadyExists'
  *          '500':
  *              $ref: '#components/responses/InternalServerError'
  */

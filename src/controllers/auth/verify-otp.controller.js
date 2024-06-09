@@ -38,7 +38,7 @@ export async function httpVerifyOTP(req, res) {
     // Verify client OTP input matches server OTP
     if (!(clientOTP === serverOTP)) {
       return res
-        .status(400)
+        .status(409)
         .json({ success: false, message: "Invalid OTP provided" });
     }
 

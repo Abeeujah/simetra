@@ -43,6 +43,16 @@
  *                      success: false
  *                      message: The requested credential is missing or wasn't found.
  * 
+ *      Expired:
+ *          description: The provided entity is expired.
+ *          allOf:
+ *              - $ref: '#/components/responses/InternalServerError'
+ *          content:
+ *              application/json:
+ *                  example:
+ *                      success: false
+ *                      message: Claims expired.
+ * 
  *      AlreadyExists:
  *          description: The provided entity already exists.
  *          allOf:

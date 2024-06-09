@@ -68,6 +68,6 @@ export const resetPasswordSchema = z.object({
 export const otpTokenSchema = z.object({
   otp: z
     .string()
-    .min(7, minLengthMessage("OTP", 5))
+    .min(5, minLengthMessage("OTP", 5))
     .max(255, maxLengthMessage("OTP", 5)),
 });

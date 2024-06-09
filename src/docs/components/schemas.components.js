@@ -18,6 +18,13 @@
  *          maxLength: 255
  *          description: Account password.
  * 
+ *      # OTP schema
+ *      OTP:
+ *          type: string
+ *          minLength: 5
+ *          maxLength: 10
+ *          description: One time password.
+ * 
  *      # User credentials schema.
  *      UserCredentials:
  *          type: object
