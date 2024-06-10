@@ -28,6 +28,7 @@ export async function httpUpdateUserInfo(req, res) {
   }
 
   const { gender, phone, address } = validation.data;
+  const { photo } = res.locals.uploadMapping;
 
   if (!req.user && !res.locals.user) {
     // Get the user from the session
@@ -35,7 +36,7 @@ export async function httpUpdateUserInfo(req, res) {
   }
 
   const user = req.user || res.locals.user;
-  const { email } = user;
+  const { email, id } = user;
 
   try {
     // Ensure user is valid
@@ -48,7 +49,7 @@ export async function httpUpdateUserInfo(req, res) {
     }
 
     // Create user profile
-    const profileEntity = { gender, phone, address, userEmail: email };
+    const profileEntity = { gender, phone, address, photo, user: id };
     const userInfo = await createUserInfo(profileEntity);
 
     // Return

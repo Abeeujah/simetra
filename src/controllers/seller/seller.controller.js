@@ -41,8 +41,8 @@ export async function httpSellerSetup(req, res) {
     itemsType,
     location,
     storeName,
-    coverBanner: coverBanner[0],
-    profilePhoto: profilePhoto[0],
+    coverBanner,
+    profilePhoto,
   };
 
   try {

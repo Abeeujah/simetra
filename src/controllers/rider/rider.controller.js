@@ -46,9 +46,9 @@ export async function httpSetupRider(req, res) {
     vehiclePlateNumber,
     vehicleModel,
     userEmail: email,
-    riderPicture: riderPicture[0],
-    vehiclePicture: vehiclePicture[0],
-    vehicleDocument: vehicleDocument[0],
+    riderPicture,
+    vehiclePicture,
+    vehicleDocument,
   };
 
   try {

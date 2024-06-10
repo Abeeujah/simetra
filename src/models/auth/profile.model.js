@@ -18,6 +18,7 @@ const profileSchema = new Schema(
         "EXPLORER",
       ],
     },
+    photo: { type: String, required: true, min: 3, max: 255 },
     user: {
       type: Schema.Types.ObjectId,
       ref: "User",

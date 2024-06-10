@@ -32,6 +32,20 @@ export const profileSchema = z.object({
     .max(14, maxLengthMessage("Phone number", 14)),
 });
 
+export const updateProfileSchema = z.object({
+  gender: z.enum(["MALE", "FEMALE"]).optional(),
+  address: z
+    .string()
+    .min(3, minLengthMessage("Address", 3))
+    .max(255, maxLengthMessage("Address", 255))
+    .optional(),
+  phone: z
+    .string()
+    .min(11, minLengthMessage("Phone number", 11))
+    .max(14, maxLengthMessage("Phone number", 14))
+    .optional(),
+});
+
 export const updateUserSchema = signUpSchema.optional();
 
 export const signInSchema = z.object({
