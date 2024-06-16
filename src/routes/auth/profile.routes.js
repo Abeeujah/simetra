@@ -10,6 +10,7 @@ import {
   deserializeUser,
   requireUser,
 } from "../../middleware/jwt.middleware.js";
+import { httpViewUserProfile } from "../../controllers/userinfo/view-user-info.controller.js";
 
 const profileRouter = Router();
 
@@ -23,9 +24,10 @@ profileRouter.post(
   [deserializeUser, requireUser],
   httpUpdateCustomerProfile
 );
+profileRouter.get("/", [deserializeUser, requireUser], httpViewUserProfile);
 
 profileRouter.patch(
-  "/users/:userId",
+  "/user",
   [deserializeUser, requireUser],
   httpUpdateUser
 );

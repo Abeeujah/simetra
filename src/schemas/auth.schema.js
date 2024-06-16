@@ -46,7 +46,19 @@ export const updateProfileSchema = z.object({
     .optional(),
 });
 
-export const updateUserSchema = signUpSchema.optional();
+export const updateUserSchema = z.object({
+  name: z
+    .string()
+    .min(3, minLengthMessage("Name", 3))
+    .max(255, maxLengthMessage("Name", 255))
+    .optional(),
+  email: z
+    .string()
+    .email()
+    .min(5, minLengthMessage("Email", 5))
+    .max(255, maxLengthMessage("Email", 255))
+    .optional(),
+});
 
 export const signInSchema = z.object({
   email: z

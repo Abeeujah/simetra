@@ -4,6 +4,7 @@ import { findUserByEmail } from "../../services/auth.services.js";
 import {
   createUserInfo,
   updatedUserInfo,
+  viewUserProfile,
 } from "../../services/user-info.services.js";
 import { userInfoSchema, userTypeSchema } from "../../utils/user.schema.js";
 

@@ -84,4 +84,16 @@
  *                      $ref: '#components/schemas/UserType'
  *                  example:
  *                      userType: FREELANCER
+ * 
+ *      # Patch User
+ *      PatchUser:
+ *          description: Update user PII to current desired.
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#components/schemas/PatchUser'
+ *                  example:
+ *                      email: sarri@ball.com
+ *                      name: Maurizio Sarri
  */

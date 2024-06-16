@@ -39,6 +39,20 @@ export async function updatedUserInfo(userTypeDto) {
   }
 }
 
+// View User Profile
+export async function viewUserProfile(user) {
+  try {
+    const profile = await ProfileModel.findOne({ user });
+    if (!profile) {
+      return false;
+    }
+    return profile.toJSON();
+  } catch (error) {
+    console.error({ viewUserProfileError: error });
+    throw new Error(error.message);
+  }
+}
+
 export async function updateProfile(filter, update) {
   try {
     const profile = await ProfileModel.findOneAndUpdate(filter, update, {

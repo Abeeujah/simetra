@@ -129,4 +129,17 @@
  *              - SERVICES
  *              - EXPLORER
  *          description: The function the user performs in the application.
+ * 
+ *      # PatchUser
+ *      PatchUser:
+ *          type: object
+ *          properties:
+ *              email:
+ *                  $ref: '#components/schemas/Email'
+ *                  description: The email address to be updated to.
+ *              name:
+ *                  type: string
+ *                  minLength: 3
+ *                  maxLength: 255
+ *                  description: The name of the user creating an account.
  */

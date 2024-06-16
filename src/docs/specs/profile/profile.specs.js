@@ -41,4 +41,38 @@
  *              $ref: '#/components/responses/NotFound'
  *          '500':
  *              $ref: '#/components/responses/InternalServerError'
+ * 
+ * # View Profile endpoint
+ * /api/profile:
+ *  get:
+ *      description: This endpoint retrieves the current user's profile information. A successful response will return a JSON object containing details about the user's account.
+ *      summary: View User Profile.
+ *      tags: [Profile]
+ *      operationId: viewUserProfile
+ *      responses:
+ *          '200':
+ *              $ref: '#components/responses/Success'
+ *          '404':
+ *              $ref: '#components/responses/BadRequest'
+ *          '500':
+ *              $ref: '#components/responses/InternalServerError'
+ * 
+ * # Update User endpoint
+ * /api/profile/user:
+ *      patch:
+ *          description: This endpoint allows users to update their existing information. Provide a valid user data in the request body to modify specific details associated with that user.
+ *          summary: Update User PII
+ *          tags: [Profile]
+ *          operationId: patchUser
+ *          requestBody:
+ *              $ref: '#components/requestBodies/PatchUser'
+ *          responses:
+ *              '200':
+ *                  $ref: '#components/responses/Success'
+ *              '400':
+ *                  $ref: '#components/responses/BadRequest'
+ *              '404':
+ *                  $ref: '#components/responses/NotFound'
+ *              '500':
+ *                  $ref: '#components/responses/InternalServerError'
  */

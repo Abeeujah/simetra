@@ -123,16 +123,21 @@ export async function updateUser(updateUserDto) {
 
 export async function updateUserExtended(filter, update) {
   try {
-    const user = await UserModel.findOneAndUpdate(filter, update, {
-      new: true,
-    });
+    const verified = update.email && update.email;
+    console.log(verified);
+    const user = await UserModel.findOneAndUpdate(
+      filter,
+      { ...update },
+      {
+        new: true,
+      }
+    );
 
     if (!user) {
       return false;
     }
 
-    const { name, email, phone, address, gender } = user;
-    return { name, email, phone, address, gender };
+    return user.toJSON();
   } catch (error) {
     console.error({ updateUserExtendedError: error });
     if (error.keyValue) {

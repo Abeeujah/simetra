@@ -11,8 +11,7 @@ import { validationErrorBuilder } from "../../utils/validation.util.js";
 
 export async function httpUpdateUser(req, res) {
   try {
-    const { userId } = req.params;
-    const { email } = req.user;
+    const { id } = req.user;
     const validation = updateUserSchema.safeParse(req.body);
 
     if (!validation.success) {
@@ -22,16 +21,8 @@ export async function httpUpdateUser(req, res) {
       return res.status(400).json({ success: false, message });
     }
 
-    const whoAmI = await validateRequest(email);
-    if (whoAmI.toString() !== userId) {
-      return res.status(401).json({
-        success: false,
-        message: "Unauthorized to perform this action.",
-      });
-    }
-
     const { data } = validation;
-    const updatedUser = updateUserExtended({ _id: userId }, data);
+    const updatedUser = updateUserExtended({ _id: id }, data);
 
     if (!updatedUser) {
       return res
@@ -39,10 +30,22 @@ export async function httpUpdateUser(req, res) {
         .json({ success: false, message: "User doesn't exist." });
     }
 
+    const userJwt = { id: user._id, email: user.email };
+    const accessToken = await signJwt(
+      { user: userJwt },
+      { expiresIn: accessTokenOptions.maxAge }
+    );
+    res.cookie("accessToken", accessToken, accessTokenOptions);
+    const refreshToken = await signJwt(
+      { user: userJwt },
+      { expiresIn: refreshTokenOptions.maxAge }
+    );
+    res.cookie("refreshToken", refreshToken, refreshTokenOptions);
+
     return res.status(200).json({
       success: true,
       message: "User profile updated successfully.",
-      data: { user: updatedUser },
+      data: { user: { ...updatedUser, password: null } },
     });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
