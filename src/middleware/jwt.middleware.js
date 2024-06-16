@@ -55,6 +55,7 @@ export async function deserializeUser(req, res, next) {
   );
 
   if (decoded) {
+    console.log(decoded)
     const { email } = decoded.user;
     const exists = await findUserByEmail(email, false);
 

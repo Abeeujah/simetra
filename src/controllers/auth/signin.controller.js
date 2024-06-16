@@ -6,6 +6,7 @@ import {
   refreshTokenOptions,
 } from "../../utils/cookies.util.js";
 import { signJwt } from "../../utils/jwt.utils.js";
+import { sendMagicLink } from "../../utils/magic-link.utils.js";
 import { validationErrorBuilder } from "../../utils/validation.util.js";
 
 // Sign in endpoint
@@ -45,6 +46,21 @@ export async function httpSignIn(req, res) {
     }
 
     const userJwt = { id: user._id, email: user.email };
+
+    const signedUpDate = new Date(user.createdAt);
+    const weekAfter = new Date(
+      signedUpDate.getTime() + 7 * 24 * 60 * 60 * 1000
+    );
+
+    if (!user.verified && new Date() >= weekAfter) {
+      console.log(email);
+      await sendMagicLink(req, userJwt);
+      return res.status(307).json({
+        success: false,
+        message: "Please verify your account to proceed.",
+      });
+    }
+    
     const accessToken = await signJwt(
       { user: userJwt },
       { expiresIn: accessTokenOptions.maxAge }

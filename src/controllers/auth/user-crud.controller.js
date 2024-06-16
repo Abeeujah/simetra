@@ -7,6 +7,12 @@ import {
   updateUserExtended,
   validateRequest,
 } from "../../services/auth.services.js";
+import {
+  accessTokenOptions,
+  refreshTokenOptions,
+} from "../../utils/cookies.util.js";
+import { signJwt } from "../../utils/jwt.utils.js";
+import { sendMagicLink } from "../../utils/magic-link.utils.js";
 import { validationErrorBuilder } from "../../utils/validation.util.js";
 
 export async function httpUpdateUser(req, res) {
@@ -22,15 +28,17 @@ export async function httpUpdateUser(req, res) {
     }
 
     const { data } = validation;
-    const updatedUser = updateUserExtended({ _id: id }, data);
+    const updatedUser = await updateUserExtended({ _id: id }, data);
 
     if (!updatedUser) {
       return res
         .status(404)
         .json({ success: false, message: "User doesn't exist." });
     }
+    console.log(updatedUser);
 
-    const userJwt = { id: user._id, email: user.email };
+    const userJwt = { id: updatedUser._id, email: updatedUser.email };
+    await sendMagicLink(req, userJwt);
     const accessToken = await signJwt(
       { user: userJwt },
       { expiresIn: accessTokenOptions.maxAge }
@@ -45,7 +53,7 @@ export async function httpUpdateUser(req, res) {
     return res.status(200).json({
       success: true,
       message: "User profile updated successfully.",
-      data: { user: { ...updatedUser, password: null } },
+      data: { ...updatedUser, password: null },
     });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });

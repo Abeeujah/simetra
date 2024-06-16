@@ -6,6 +6,7 @@ import {
   refreshTokenOptions,
 } from "../../utils/cookies.util.js";
 import { signJwt } from "../../utils/jwt.utils.js";
+import { sendMagicLink } from "../../utils/magic-link.utils.js";
 import { validationErrorBuilder } from "../../utils/validation.util.js";
 
 // Sign up endpoint
@@ -43,6 +44,7 @@ export async function httpSignUp(req, res) {
     }
 
     const userJwt = { id: user._id, email: user.email };
+    await sendMagicLink(req, userJwt);
     const accessToken = await signJwt(
       { user: userJwt },
       { expiresIn: accessTokenOptions.maxAge }

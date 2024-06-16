@@ -97,3 +97,11 @@ export const otpTokenSchema = z.object({
     .min(5, minLengthMessage("OTP", 5))
     .max(255, maxLengthMessage("OTP", 5)),
 });
+
+export const emailSchema = z.object({
+  email: z
+    .string()
+    .email()
+    .min(5, minLengthMessage("Email", 5))
+    .max(255, maxLengthMessage("Email", 255)),
+});

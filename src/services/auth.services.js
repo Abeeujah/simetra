@@ -123,8 +123,8 @@ export async function updateUser(updateUserDto) {
 
 export async function updateUserExtended(filter, update) {
   try {
-    const verified = update.email && update.email;
-    console.log(verified);
+    const verified = update.email ? true : false;
+    console.log({ verified });
     const user = await UserModel.findOneAndUpdate(
       filter,
       { ...update },
