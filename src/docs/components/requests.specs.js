@@ -2,7 +2,7 @@
  * @openapi
  * components:
  *  requestBodies:
- *      # Signin requestBody
+ *      # Signin
  *      Signin:
  *          description: Sign in to access your account.
  *          required: true
@@ -14,7 +14,7 @@
  *                      email: kai@havertz.com
  *                      password: chelsea
  * 
- *      # Signup requestBody
+ *      # Signup
  *      Signup:
  *          description: Sign up to create an account.
  *          required: true
@@ -27,7 +27,7 @@
  *                      email: kai@havertz.com
  *                      password: chelsea
  * 
- *      # Forgot-Password requestBody
+ *      # Forgot-Password
  *      ForgotPassword:
  *          description: Provide your registered email address to initiate a password reset flow.
  *          required: true
@@ -38,7 +38,7 @@
  *                  example:
  *                      email: kai@havertz.com
  * 
- *      # Verify OTP requestBody
+ *      # Verify OTP
  *      VerifyOTP:
  *          description: Provide the OTP sent to your email inbox.
  *          required: true
@@ -49,7 +49,7 @@
  *                  example:
  *                      otp: "36419"
  * 
- *      # Reset Password requestBody
+ *      # Reset Password
  *      ResetPassword:
  *          description: The new password, and an additional field for confirmation.
  *          required: true
@@ -60,4 +60,17 @@
  *                  example:
  *                      password: pochettino
  *                      confirmPassword: pochettino
+ * 
+ *      # Create Profile
+ *      CreateProfile:
+ *          description: Profile information to be associateds with your user account.
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#components/schemas/CreateProfile'
+ *                  example:
+ *                      gender: MALE
+ *                      phone: "08012345678"
+ *                      address: Stamford Bridge.
  */

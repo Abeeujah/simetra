@@ -47,7 +47,7 @@ export async function httpForgotPassword(req, res) {
 
     // Create a session
     const otpToken = await signJwt(
-      { ...user, otp },
+      { user: { ...user }, otp },
       { expiresIn: otpTokenTtl }
     );
     res.cookie("otpToken", otpToken, otpTokenOptions);

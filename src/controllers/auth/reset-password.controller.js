@@ -59,14 +59,20 @@ export async function httpResetPassword(req, res) {
     const updatedUser = await updateUser(updateUserDto);
 
     // Create session
-    const accessToken = await signJwt(updatedUser, {
-      expiresIn: accessTokenTtl,
-    });
+    const accessToken = await signJwt(
+      { user: { updatedUser } },
+      {
+        expiresIn: accessTokenTtl,
+      }
+    );
     res.cookie("accessToken", accessToken, accessTokenOptions);
 
-    const refreshToken = await signJwt(updatedUser, {
-      expiresIn: refreshTokenTtl,
-    });
+    const refreshToken = await signJwt(
+      { user: { updatedUser } },
+      {
+        expiresIn: refreshTokenTtl,
+      }
+    );
     res.cookie("refreshToken", refreshToken, refreshTokenOptions);
 
     // Return

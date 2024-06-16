@@ -2,7 +2,7 @@
  * @openapi
  * components:
  *  schemas:
- *      # Email schema.
+ *      # Email.
  *      Email:
  *          type: string
  *          format: email
@@ -10,7 +10,7 @@
  *          maxLength: 5
  *          description: Provisioned email address.
  * 
- *      # Password schema.
+ *      # Password.
  *      Password:
  *          type: string
  *          format: password
@@ -18,14 +18,14 @@
  *          maxLength: 255
  *          description: Account password.
  * 
- *      # OTP schema
+ *      # OTP
  *      OTP:
  *          type: string
  *          minLength: 5
  *          maxLength: 10
  *          description: One time password.
  * 
- *      # User credentials schema.
+ *      # User credentials.
  *      UserCredentials:
  *          type: object
  *          required:
@@ -39,7 +39,7 @@
  *                  $ref: '#/components/schemas/Password'
  *                  description: The password of the user creating an account.
  * 
- *      # Signup schema.
+ *      # Signup.
  *      Signup:
  *          type: object
  *          allOf:
@@ -53,7 +53,7 @@
  *                  maxLength: 255
  *                  description: The name of the user creating an account.
  * 
- *      # Signin schema.
+ *      # Signin.
  *      Signin:
  *          $ref: '#/components/schemas/UserCredentials'
  *      # Error schema.
@@ -70,7 +70,7 @@
  *                  type: string
  *                  description: A human-readable explanation of the error.
  * 
- *      # Success schema
+ *      # Success
  *      Success:
  *          type: object
  *          allOf:
@@ -82,7 +82,7 @@
  *                  type: object
  *                  description: The response data object.
  * 
- *      # Reset Password schema
+ *      # Reset Password.
  *      ResetPassword:
  *          type: object
  *          required:
@@ -95,4 +95,25 @@
  *              confirmPassword:
  *                  type: Password
  *                  description: Password confirmation.
+ * 
+ *      # Create Profile.
+ *      CreateProfile:
+ *          type: object
+ *          required:
+ *              - gender
+ *              - phone
+ *              - address
+ *          properties:
+ *              gender:
+ *                  type: string
+ *                  enum:
+ *                      - MALE
+ *                      - FEMALE
+ *                  description: The gender of the user (MALE, FEMALE).
+ *              phone:
+ *                  type: string
+ *                  description: The phone contact address of the user, country code is supported.
+ *              address:
+ *                  type: string
+ *                  description: The residential address of the user.
  */
