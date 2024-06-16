@@ -48,4 +48,16 @@
  *                      $ref: '#components/schemas/OTP'
  *                  example:
  *                      otp: "36419"
+ * 
+ *      # Reset Password requestBody
+ *      ResetPassword:
+ *          description: The new password, and an additional field for confirmation.
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#components/schemas/ResetPassword'
+ *                  example:
+ *                      password: pochettino
+ *                      confirmPassword: pochettino
  */

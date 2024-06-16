@@ -81,4 +81,18 @@
  *              data:
  *                  type: object
  *                  description: The response data object.
+ * 
+ *      # Reset Password schema
+ *      ResetPassword:
+ *          type: object
+ *          required:
+ *              - password
+ *              - confirmPassword
+ *          properties:
+ *              password:
+ *                  type: Password
+ *                  description: The new password.
+ *              confirmPassword:
+ *                  type: Password
+ *                  description: Password confirmation.
  */

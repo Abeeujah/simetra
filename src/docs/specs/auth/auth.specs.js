@@ -79,4 +79,24 @@
  *              $ref: '#components/responses/AlreadyExists'
  *          '500':
  *              $ref: '#components/responses/InternalServerError'
+ * # Reset Password Endpoint
+ * /api/auth/reset-password:
+ *  post:
+ *      description: This endpoint allows users to reset their forgotten password. A user will be able to initiate the password reset process by providing their registered email address. An email will be sent to the provided address containing a one time password(OTP). Verifying the OTP will allow users to be able to reset their password.
+ *      summary: Reset Password.
+ *      tags: [Auth]
+ *      operationId: resetPassword
+ *      requestBody:
+ *          $ref: '#components/requestBodies/ResetPassword'
+ *      responses:
+ *          '200':
+ *              $ref: '#components/responses/Success'
+ *          '400':
+ *              $ref: '#components/responses/BadRequest'
+ *          '401':
+ *              $ref: '#components/responses/Unauthorized'
+ *          '404':
+ *              $ref: '#components/responses/NotFound'
+ *          '500':
+ *              $ref: '#components/responses/InternalServerError'
  */
