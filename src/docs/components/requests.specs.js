@@ -73,4 +73,15 @@
  *                      gender: MALE
  *                      phone: "08012345678"
  *                      address: Stamford Bridge.
+ * 
+ *      # Update UserType
+ *      UpdateUserType:
+ *          description: User type information to describe your function in the application.
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#components/schemas/UserType'
+ *                  example:
+ *                      userType: FREELANCER
  */

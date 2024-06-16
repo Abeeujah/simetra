@@ -116,4 +116,17 @@
  *              address:
  *                  type: string
  *                  description: The residential address of the user.
+ * 
+ *      # UserType.
+ *      UserType:
+ *          type: string
+ *          enum:
+ *              # "SELLER" | "RIDER" | "SHOPPER" | "FREELANCER" | "SERVICES" | "EXPLORER"
+ *              - SELLER
+ *              - RIDER
+ *              - SHOPPER
+ *              - FREELANCER
+ *              - SERVICES
+ *              - EXPLORER
+ *          description: The function the user performs in the application.
  */
