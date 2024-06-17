@@ -119,4 +119,19 @@
  *              $ref: '#components/responses/NotFound'
  *          '500':
  *              $ref: '#components/responses/InternalServerError'
+ * 
+ * # Verify Magic Link
+ * /api/auth/verify-magic-link:
+ *  get:
+ *      description: This endpoint allows users to verify their account on the platform. Users are routed here with a magic link that contains a token, if valid; verifies their account.
+ *      summary: Complete Verification.
+ *      tags: [Auth]
+ *      operationId: completeVerification
+ *      responses:
+ *          '200':
+ *              '#components/responses/Success'
+ *          '400':
+ *              '#components/responses/BadRequest'
+ *          '500':
+ *              '#components/responses/InternalServerError'
  */
