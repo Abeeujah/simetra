@@ -59,6 +59,10 @@ export async function updateProfile(filter, update) {
       new: true,
     });
 
+    if (!profile) {
+      return false;
+    }
+
     return profile.toJSON();
   } catch (error) {
     console.error({ updateProfileError: error });

@@ -4,13 +4,16 @@ import {
   httpUpdateUser,
   httpViewUser,
 } from "../../controllers/auth/user-crud.controller.js";
-import { httpUpdateUserInfo } from "../../controllers/userinfo/update-user-info.controller.js";
+import {
+  httpUpdateUserInfo,
+  httpUpdateUserprofile,
+} from "../../controllers/userinfo/update-user-info.controller.js";
 import { httpUpdateCustomerProfile } from "../../controllers/userinfo/update-user-type.controller.js";
+import { httpViewUserProfile } from "../../controllers/userinfo/view-user-info.controller.js";
 import {
   deserializeUser,
   requireUser,
 } from "../../middleware/jwt.middleware.js";
-import { httpViewUserProfile } from "../../controllers/userinfo/view-user-info.controller.js";
 
 const profileRouter = Router();
 
@@ -25,17 +28,10 @@ profileRouter.post(
   httpUpdateCustomerProfile
 );
 profileRouter.get("/", [deserializeUser, requireUser], httpViewUserProfile);
+profileRouter.patch("/", [deserializeUser, requireUser], httpUpdateUserprofile);
 
-profileRouter.patch(
-  "/user",
-  [deserializeUser, requireUser],
-  httpUpdateUser
-);
-profileRouter.delete(
-  "/users/:userId",
-  [deserializeUser, requireUser],
-  httpDeleteUser
-);
-profileRouter.get("/users/:userId", httpViewUser);
+profileRouter.patch("/user", [deserializeUser, requireUser], httpUpdateUser);
+profileRouter.delete("/user", [deserializeUser, requireUser], httpDeleteUser);
+profileRouter.get("/user", [deserializeUser, requireUser], httpViewUser);
 
 export default profileRouter;

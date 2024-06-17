@@ -96,6 +96,14 @@
  *                  type: Password
  *                  description: Password confirmation.
  * 
+ *      # Gender
+ *      Gender:
+ *          type: string
+ *          enum:
+ *              - MALE
+ *              - FEMALE
+ *          description: The gender of the user (MALE, FEMALE)
+ * 
  *      # Create Profile.
  *      CreateProfile:
  *          type: object
@@ -105,11 +113,7 @@
  *              - address
  *          properties:
  *              gender:
- *                  type: string
- *                  enum:
- *                      - MALE
- *                      - FEMALE
- *                  description: The gender of the user (MALE, FEMALE).
+ *                  type: Gender
  *              phone:
  *                  type: string
  *                  description: The phone contact address of the user, country code is supported.
@@ -129,6 +133,21 @@
  *              - SERVICES
  *              - EXPLORER
  *          description: The function the user performs in the application.
+ * 
+ *      # PatchUserProfile
+ *      PatchUserProfile:
+ *          type: object
+ *          properties:
+ *              gender:
+ *                  type: Gender
+ *              phone:
+ *                  type: string
+ *                  description: The phone contact address of the user, country code is supported.
+ *              address:
+ *                  type: string
+ *                  description: The residential address of the user.
+ *              userType:
+ *                  type: UserType
  * 
  *      # PatchUser
  *      PatchUser:

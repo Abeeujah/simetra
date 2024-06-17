@@ -62,18 +62,9 @@ export async function httpUpdateUser(req, res) {
 
 export async function httpDeleteUser(req, res) {
   try {
-    const { userId } = req.params;
-    const { email } = req.user;
+    const { id } = req.user;
 
-    const whoAmI = await validateRequest(email);
-    if (whoAmI.toString() !== userId) {
-      return res.status(401).json({
-        success: false,
-        message: "Unauthorized to perform this action.",
-      });
-    }
-
-    const user = await deleteUser({ _id: userId });
+    const user = await deleteUser({ _id: id });
 
     if (!user) {
       return res
@@ -105,9 +96,9 @@ export async function httpDeleteAllUsers(req, res) {
 }
 
 export async function httpViewUser(req, res) {
-  const { userId } = req.params;
   try {
-    const user = await findUser({ _id: userId });
+    const { id } = req.user;
+    const user = await findUser({ _id: id });
 
     if (!user) {
       return res

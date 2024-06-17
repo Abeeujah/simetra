@@ -96,4 +96,18 @@
  *                  example:
  *                      email: sarri@ball.com
  *                      name: Maurizio Sarri
+ * 
+ *      # Patch User Profile
+ *      PatchUserProfile:
+ *          description: Update user profile to current desired.
+ *          required: true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#components/schemas/PatchUserProfile'
+ *                  example:
+ *                      gender: FEMALE
+ *                      phone: "09012345678"
+ *                      address: The White House
+ *                      userType: SHOPPER
  */
