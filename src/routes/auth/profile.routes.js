@@ -7,6 +7,7 @@ import {
 import {
   httpUpdateUserInfo,
   httpUpdateUserprofile,
+  httpdeleteUserProfile,
 } from "../../controllers/userinfo/update-user-info.controller.js";
 import { httpUpdateCustomerProfile } from "../../controllers/userinfo/update-user-type.controller.js";
 import { httpViewUserProfile } from "../../controllers/userinfo/view-user-info.controller.js";
@@ -29,6 +30,11 @@ profileRouter.post(
 );
 profileRouter.get("/", [deserializeUser, requireUser], httpViewUserProfile);
 profileRouter.patch("/", [deserializeUser, requireUser], httpUpdateUserprofile);
+profileRouter.delete(
+  "/",
+  [deserializeUser, requireUser],
+  httpdeleteUserProfile
+);
 
 profileRouter.patch("/user", [deserializeUser, requireUser], httpUpdateUser);
 profileRouter.delete("/user", [deserializeUser, requireUser], httpDeleteUser);

@@ -3,6 +3,7 @@ import { userInfoSchema } from "../../schemas/user.schema.js";
 import { findUserByEmail } from "../../services/auth.services.js";
 import {
   createUserInfo,
+  deleteUserInfo,
   updateProfile,
 } from "../../services/user-info.services.js";
 import { validationErrorBuilder } from "../../utils/validation.util.js";
@@ -84,7 +85,7 @@ export async function httpUpdateUserprofile(req, res) {
     if (!profile) {
       return res.status(404).json({
         success: false,
-        message: "No Profile associated with this user.",
+        message: "No Profile associated with this User account.",
       });
     }
 
@@ -95,5 +96,27 @@ export async function httpUpdateUserprofile(req, res) {
     });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
+  }
+}
+
+export async function httpdeleteUserProfile(req, res) {
+  try {
+    const { id } = req.user;
+    const profile = await deleteUserInfo({ user: id });
+
+    if (!profile) {
+      return res.status(404).json({
+        success: false,
+        message: "No Profile associated with this User account.",
+      });
+    }
+
+    return res.status(204).json({
+      success: true,
+      message: "Profile deleted successfully.",
+      data: { profile },
+    });
+  } catch (error) {
+    return res.status(500).json({ success: true, message: error.message });
   }
 }

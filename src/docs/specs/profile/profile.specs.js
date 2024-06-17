@@ -66,12 +66,26 @@
  *      requestBody:
  *          $ref: '#components/requestBodies/PatchUserProfile'
  * 
+ * # Delete Profile endpoint
+ *  delete:
+ *      description: This endpoint allows authorized users to permanently delete their own user profile and associated data. Use this endpoint with caution as the deletion cannot be undone.
+ *      summary: Delete User Profile.
+ *      tags: [Profile]
+ *      operationId: deleteUserProfile
+ *      responses:
+ *          '204':
+ *              $ref: '#components/responses/Success'
+ *          '404':
+ *              $ref: '#components/responses/NotFound'
+ *          '500':
+ *              $ref: '#components/responses/InternalServerError'
+ * 
  * /api/profile/user:
  * # Update User endpoint
  *      patch:
  *          description: This endpoint allows users to update their existing information. Provide a valid user data in the request body to modify specific details associated with that user.
  *          summary: Update User PII (Partial).
- *          tags: [Profile]
+ *          tags: [User]
  *          operationId: patchUser
  *          requestBody:
  *              $ref: '#components/requestBodies/PatchUser'
@@ -89,7 +103,7 @@
  *      delete:
  *          description: This endpoint allows authorized users to delete their specific user account. Provide a valid session ID to permanently remove the associated user and their data.
  *          summary: Delete User.
- *          tags: [Profile]
+ *          tags: [User]
  *          operationId: deleteUser
  *          responses:
  *              '204':
@@ -103,7 +117,7 @@
  *      get:
  *          description: This endpoint retrieves information about a specific user. Provide a valid session to get details about the associated user account.
  *          summary: View User.
- *          tags: [Profile]
+ *          tags: [User]
  *          operationId: viewUser
  *          responses:
  *              '200':

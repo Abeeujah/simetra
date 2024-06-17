@@ -88,9 +88,12 @@ export async function validateRequest(email, entity) {
 }
 
 // Delete user info
-export async function deleteUserInfo() {
+export async function deleteUserInfo(filter) {
   try {
-    const userInfo = await ProfileModel.delete({});
+    const userInfo = await ProfileModel.delete(filter);
+    if (!userInfo) {
+      return false;
+    }
     return userInfo;
   } catch (error) {
     console.error({ deleteUserInfoError: error });
