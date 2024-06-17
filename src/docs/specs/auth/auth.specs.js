@@ -79,6 +79,7 @@
  *              $ref: '#components/responses/AlreadyExists'
  *          '500':
  *              $ref: '#components/responses/InternalServerError'
+ * 
  * # Reset Password Endpoint
  * /api/auth/reset-password:
  *  post:
@@ -95,6 +96,25 @@
  *              $ref: '#components/responses/BadRequest'
  *          '401':
  *              $ref: '#components/responses/Unauthorized'
+ *          '404':
+ *              $ref: '#components/responses/NotFound'
+ *          '500':
+ *              $ref: '#components/responses/InternalServerError'
+ * 
+ * # Request Magic Link Endpoint
+ * /api/auth/request-magic-link:
+ *  post:
+ *      description: This endpoint allows users to request a magic link to verify their account on the platform. If the provided email address is a valid email address registered in the application, an email is sent to the user containing the verification link.
+ *      summary: Request Verification.
+ *      tags: [Auth]
+ *      operationId: requestVerification
+ *      requestBody:
+ *          $ref: '#components/requestBodies/ForgotPassword'
+ *      responses:
+ *          '200':
+ *              $ref: '#components/responses/Success'
+ *          '400':
+ *              $ref: '#components/responses/BadRequest'
  *          '404':
  *              $ref: '#components/responses/NotFound'
  *          '500':

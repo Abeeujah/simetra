@@ -1,5 +1,9 @@
 import { Router } from "express";
 import { httpForgotPassword } from "../../controllers/auth/forgot-password.controller.js";
+import {
+  httpCreateMagicLink,
+  httpVerifyMagicLink,
+} from "../../controllers/auth/magic-link.controller.js";
 import { httpResetPassword } from "../../controllers/auth/reset-password.controller.js";
 import { httpSignIn } from "../../controllers/auth/signin.controller.js";
 import {
@@ -28,5 +32,7 @@ authRouter.post(
   [deserializeUser, requireUser],
   httpResetPassword
 );
+authRouter.post("/request-magic-link", httpCreateMagicLink);
+authRouter.get("/verify-magic-link", httpVerifyMagicLink);
 
 export default authRouter;
