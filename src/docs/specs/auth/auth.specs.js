@@ -127,11 +127,18 @@
  *      summary: Complete Verification.
  *      tags: [Auth]
  *      operationId: completeVerification
+ *      parameters:
+ *          -   in: query
+ *              name: token
+ *              required: true
+ *              schema:
+ *                  type: string
+ *                  format: jwt
  *      responses:
  *          '200':
- *              '#components/responses/Success'
+ *              $ref: '#components/responses/Success'
  *          '400':
- *              '#components/responses/BadRequest'
+ *              $ref: '#components/responses/BadRequest'
  *          '500':
- *              '#components/responses/InternalServerError'
+ *              $ref: '#components/responses/InternalServerError'
  */
