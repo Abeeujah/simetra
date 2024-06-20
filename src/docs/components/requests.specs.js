@@ -110,4 +110,13 @@
  *                      phone: "09012345678"
  *                      address: The White House
  *                      userType: SHOPPER
+ * 
+ *      # Upload Profile Photo
+ *      UploadProfilePhoto:
+ *          description: Upload profile photo.
+ *          required: true
+ *          content:
+ *              multipart/form-data:
+ *                  schema:
+ *                      $ref: '#components/schemas/File'
  */

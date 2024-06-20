@@ -7,14 +7,17 @@ import {
 import {
   httpUpdateUserInfo,
   httpUpdateUserprofile,
+  httpUploadProfilePhoto,
   httpdeleteUserProfile,
 } from "../../controllers/userinfo/update-user-info.controller.js";
 import { httpUpdateCustomerProfile } from "../../controllers/userinfo/update-user-type.controller.js";
 import { httpViewUserProfile } from "../../controllers/userinfo/view-user-info.controller.js";
+import { uploadB2 } from "../../middleware/backblaze.middleware.js";
 import {
   deserializeUser,
   requireUser,
 } from "../../middleware/jwt.middleware.js";
+import { profileUpload } from "../../middleware/multer/profile.multer.js";
 
 const profileRouter = Router();
 
@@ -34,6 +37,12 @@ profileRouter.delete(
   "/",
   [deserializeUser, requireUser],
   httpdeleteUserProfile
+);
+profileRouter.patch(
+  "/upload",
+  [deserializeUser, requireUser],
+  [profileUpload, uploadB2],
+  httpUploadProfilePhoto
 );
 
 profileRouter.patch("/user", [deserializeUser, requireUser], httpUpdateUser);

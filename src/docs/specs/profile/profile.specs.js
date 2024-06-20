@@ -126,4 +126,21 @@
  *                  $ref: '#components/responses/NotFound'
  *              '500':
  *                  $ref: '#components/responses/InternalServerError'
+ * 
+ * # Upload profile photo
+ * /api/profile/upload:
+ *  patch:
+ *      description: This endpoint allows users to upload a new profile photo.
+ *      summary: Upload Profile Photo.
+ *      tags: [Profile]
+ *      operationId: uploadProfilePhoto
+ *      requestBody:
+ *          $ref: '#components/requestBodies/UploadProfilePhoto'
+ *      responses:
+ *          '200':
+ *              $ref: '#components/responses/Success'
+ *          '404':
+ *              $ref: '#components/responses/NotFound'
+ *          '500':
+ *              $ref: '#components/responses/InternalServerError'
  */

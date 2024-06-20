@@ -3,6 +3,7 @@ import {
   profileSchema,
   updateProfileSchema,
 } from "../../schemas/auth.schema.js";
+import { validationErrorBuilder } from "../../utils/validation.util.js";
 
 function checkFileType(req, file, cb) {
   // Validate req.body

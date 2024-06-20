@@ -120,3 +120,26 @@ export async function httpdeleteUserProfile(req, res) {
     return res.status(500).json({ success: true, message: error.message });
   }
 }
+
+export async function httpUploadProfilePhoto(req, res) {
+  try {
+    const { id } = req.user;
+    const { photo } = res.locals.uploadMapping;
+    const profile = await updateProfile({ user: id }, { photo });
+
+    if (!profile) {
+      return res.status(404).json({
+        success: false,
+        message: "No profile associated with this account.",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Successpully uploaded your profile photo",
+      data: { profile },
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+}

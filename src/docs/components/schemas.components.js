@@ -161,4 +161,9 @@
  *                  minLength: 3
  *                  maxLength: 255
  *                  description: The name of the user creating an account.
+ * 
+ *      # File
+ *      File:
+ *          type: string
+ *          format: binary 
  */
