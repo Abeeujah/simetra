@@ -1,3 +1,4 @@
+import { UserModel } from "../models/auth/user.model.js";
 import { FreelancerModel } from "../models/services/freelancer.model.js";
 
 // Create a freelancer record
@@ -9,34 +10,9 @@ export async function setupFreelancer(freelancerDto, user) {
       return false;
     }
 
-    user.freelancer = freelancer._id;
-    await user.save();
+    await UserModel.findByIdAndUpdate(user._id, { freelancer: freelancer._id });
 
-    const {
-      serviceType,
-      bio,
-      experienceYears,
-      coverBanner,
-      profilePhoto,
-      externalLink,
-      imageReferenceI,
-      imageReferenceII,
-      imageReferenceIII,
-      imageReferenceIV,
-    } = freelancer;
-
-    return {
-      serviceType,
-      bio,
-      experienceYears,
-      coverBanner,
-      profilePhoto,
-      externalLink,
-      imageReferenceI,
-      imageReferenceII,
-      imageReferenceIII,
-      imageReferenceIV,
-    };
+    return freelancer.toJSON();
   } catch (error) {
     console.error({ dbError: error });
     throw new Error("Failed to setup freelancer profile.");

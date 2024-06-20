@@ -118,5 +118,14 @@
  *          content:
  *              multipart/form-data:
  *                  schema:
- *                      $ref: '#components/schemas/File'
+ *                      $ref: '#components/schemas/ProfilePhoto'
+ * 
+ *      # Setup Freelancer Account
+ *      FreelancerSetup:
+ *          description: Setup a Freelancer Account.
+ *          required: true
+ *          content:
+ *              multipart/form-data:
+ *                  schema:
+ *                      $ref: '#components/schemas/FreelancerSetup'
  */

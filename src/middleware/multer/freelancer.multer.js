@@ -1,22 +1,6 @@
 import multer from "multer";
-import {
-  registerFreelancerSchema,
-  updateFreelancerSchema,
-} from "../../schemas/freelancer.schema.js";
-import { validationErrorBuilder } from "../../utils/validation.util.js";
 
 function checkFileType(req, file, cb) {
-  // Validate req.body
-  const validator =
-    req.method === "POST" ? registerFreelancerSchema : updateFreelancerSchema;
-  const validation = validator.safeParse(req.body);
-
-  if (!validation.success) {
-    const { errors } = validation.error;
-    const message = validationErrorBuilder(errors);
-    cb(JSON.stringify({ code: 400, message }), false);
-  }
-
   // Validate the file
   if (!file) {
     cb({ code: 400, message: "Please provide the File" }, false);

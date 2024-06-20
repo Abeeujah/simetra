@@ -163,7 +163,62 @@
  *                  description: The name of the user creating an account.
  * 
  *      # File
- *      File:
- *          type: string
- *          format: binary 
+ *      ProfilePhoto:
+ *          type: object
+ *          properties:
+ *              photo:
+ *                  type: string
+ *                  format: binary
+ *                  description: The profile photo.
+ * 
+ *      # Freelancer Setup
+ *      FreelancerSetup:
+ *          type: object
+ *          required:
+ *              - serviceType
+ *              - bio
+ *              - experienceYears
+ *              - officeAddress
+ *              - coverBanner
+ *              - profilePhoto
+ *          properties:
+ *              serviceType:
+ *                  type: string
+ *                  description: The service to be rendered on the platform
+ *              bio:
+ *                  type: string
+ *                  description: A brief descriptive expository on your service and your offerings
+ *              experienceYears:
+ *                  type: string
+ *                  description: Years of experience in the field.
+ *              officeAddress:
+ *                  type: string
+ *                  description: Your physical location where you offer this service
+ *              externalLink:
+ *                  type: string
+ *                  description: A link containing references to your past projects.
+ *              profilePhoto:
+ *                  type: string
+ *                  format: binary
+ *                  description: The display picture of your freelancer page.
+ *              coverBanner:
+ *                  type: string
+ *                  format: binary
+ *                  description: The cover photo of your freelancer profile page.
+ *              imageReferenceI:
+ *                  type: string
+ *                  format: binary
+ *                  description: The first image reference showcasing your past works.
+ *              imageReferenceII:
+ *                  type: string
+ *                  format: binary
+ *                  description: The second image reference showcasing your past works.
+ *              imageReferenceIII:
+ *                  type: string
+ *                  format: binary
+ *                  description: The third image reference showcasing your past works.
+ *              imageReferenceIV:
+ *                  type: string
+ *                  format: binary
+ *                  description: The fourth image reference showcasing your past works.
  */

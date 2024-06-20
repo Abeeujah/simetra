@@ -5,6 +5,7 @@ import {
   httpGetFreelancerById,
   httpRegisterFreelancer,
   httpUpdateFreelancer,
+  httpValidateFreelancerPayload,
 } from "../../../controllers/freelancer/freelancer.controller.js";
 import { uploadB2 } from "../../../middleware/backblaze.middleware.js";
 import {
@@ -18,7 +19,7 @@ const freelancerRouter = Router();
 freelancerRouter.post(
   "/freelancer",
   [deserializeUser, requireUser],
-  [freelancerUpload, uploadB2],
+  [freelancerUpload, httpValidateFreelancerPayload, uploadB2],
   httpRegisterFreelancer
 );
 freelancerRouter.get(

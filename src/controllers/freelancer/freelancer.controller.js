@@ -13,55 +13,15 @@ import {
 import { validationErrorBuilder } from "../../utils/validation.util.js";
 
 export async function httpRegisterFreelancer(req, res) {
-  if (!req.user && !res.locals.user) {
-    // Get the user from the session
-    return res.status(401).json({ success: false, message: "Unauthorized" });
-  }
-
-  const user = req.user || res.locals.user;
-  const { email } = user;
-
-  // Validate the incoming request body
-  const validation = registerFreelancerSchema.safeParse(req.body);
-
-  if (!validation.success) {
-    const { errors } = validation.error;
-    console.error({ validationError: validation.error.errors });
-    const message = validationErrorBuilder(errors);
-    return res.status(400).json({ success: false, message });
-  }
-
-  const { bio, experienceYears, serviceType, externalLink, officeAddress } =
-    validation.data;
-
-  // Extract the image urls from res.locals
+  // Extract the validated payload and image urls from res.locals
   const { uploadMapping } = res.locals;
-  const {
-    profilePhoto,
-    coverBanner,
-    imageReferenceI,
-    imageReferenceII,
-    imageReferenceIII,
-    imageReferenceIV,
-  } = uploadMapping;
+  const { data } = req;
 
   // Create the freelancer DTO
-  const freelancerDto = {
-    serviceType,
-    bio,
-    experienceYears,
-    officeAddress,
-    externalLink: externalLink || undefined,
-    userEmail: email,
-    profilePhoto,
-    coverBanner,
-    imageReferenceI,
-    imageReferenceII,
-    imageReferenceIII,
-    imageReferenceIV,
-  };
+  const freelancerDto = { ...data, ...uploadMapping };
 
   try {
+    const { email } = req.user;
     const user = await findUserByEmail(email, true);
 
     if (!user) {
@@ -92,11 +52,7 @@ export async function httpRegisterFreelancer(req, res) {
     });
   } catch (error) {
     console.error({ serverError: error.message });
-    return res.status(500).json({
-      success: false,
-      message:
-        "Some internal server error occured when processing your request",
-    });
+    return res.status(500).json({ success: false, message: error.message });
   }
 }
 
@@ -216,4 +172,21 @@ export async function httpDeleteFreelancer(req, res) {
     console.error({ serverError: error });
     return res.status(500).json({ success: false, message: error.message });
   }
+}
+
+export async function httpValidateFreelancerPayload(req, res, next) {
+  // Validate the incoming request body
+  const validator =
+    req.method === "POST" ? registerFreelancerSchema : updateFreelancerSchema;
+  const validation = validator.safeParse(req.body);
+
+  if (!validation.success) {
+    const { errors } = validation.error;
+    console.error({ validationError: validation.error.errors });
+    const message = validationErrorBuilder(errors);
+    return res.status(400).json({ success: false, message });
+  }
+
+  req.data = validation.data;
+  return next();
 }
