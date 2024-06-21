@@ -4,7 +4,7 @@ function checkFileType(req, file, cb) {
   // Validate the file
   if (!file) {
     cb(
-      JSON.stringify({ code: 400, message: "Please provide the File" }),
+      JSON.stringify({ success: false, message: "Please provide the File" }),
       false
     );
   }
@@ -21,7 +21,7 @@ function checkFileType(req, file, cb) {
   } else {
     cb(
       JSON.stringify({
-        code: 400,
+        success: false,
         message: "Error: Invalid file type provided, Images only!",
       }),
       false

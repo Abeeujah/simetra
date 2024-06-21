@@ -21,20 +21,9 @@ export async function httpCreateProduct(req, res) {
 
   const { email } = req.user;
 
-  // Validate request
-  const validation = createProductSchema.safeParse(req.body);
-
-  if (!validation.success) {
-    const { errors } = validation.error;
-    console.error({ createProductSchemaError: errors });
-    const message = validationErrorBuilder(errors);
-    return res.status(400).json({ success: false, message });
-  }
-
-  const { price, name, description, category } = validation.data;
-
   // Pull product images from res.locals
   const { uploadMapping } = res.locals;
+  const { data } = req;
 
   // Create the product
   try {
@@ -60,15 +49,8 @@ export async function httpCreateProduct(req, res) {
 
     // Create product DTO
     const productDto = {
-      price,
-      name,
-      description,
-      category,
-      productImageI: uploadMapping?.productImageI,
-      productImageII: uploadMapping?.productImageII,
-      productImageIII: uploadMapping?.productImageIII,
-      productImageIV: uploadMapping?.productImageIV,
-      productImageV: uploadMapping?.productImageV,
+      ...data,
+      ...uploadMapping,
       seller: sellerId,
     };
 
@@ -292,4 +274,21 @@ export async function httpDeleteProductById(req, res) {
   } catch (error) {
     return res.status(500).json({ success: true, message: error.message });
   }
+}
+
+export async function httpValidateProductPayload(req, res, next) {
+  // Validate req.body
+  const validator =
+    req.method === "POST" ? createProductSchema : updateProductSchema;
+  const validation = validator.safeParse(req.body);
+
+  if (!validation.success) {
+    const { errors } = validation.error;
+    console.error({ httpValidateProductPayloadError: errors });
+    const message = validationErrorBuilder(errors);
+    return res.status(400).json({ success: false, message });
+  }
+
+  req.data = validation.data;
+  return next();
 }

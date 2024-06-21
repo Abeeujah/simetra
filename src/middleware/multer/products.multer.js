@@ -1,21 +1,6 @@
 import multer from "multer";
-import {
-  createProductSchema,
-  updateProductSchema,
-} from "../../schemas/product.schema.js";
 
 function checkFileType(req, file, cb) {
-  // Validate req.body
-  const validator =
-    req.method === "POST" ? createProductSchema : updateProductSchema;
-  const validation = validator.safeParse(req.body);
-
-  if (!validation.success) {
-    const { errors } = validation.error;
-    const message = validationErrorBuilder(errors);
-    cb(JSON.stringify({ code: 400, message }), false);
-  }
-
   // Validate the file
   if (!file) {
     cb(
@@ -36,7 +21,7 @@ function checkFileType(req, file, cb) {
   } else {
     cb(
       JSON.stringify({
-        code: 400,
+        success: false,
         message: "Error: Invalid file type provided, Images only!",
       }),
       false

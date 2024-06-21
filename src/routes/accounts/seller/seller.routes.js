@@ -3,6 +3,7 @@ import {
   httpCreateProduct,
   httpDeleteProductById,
   httpUpdateProduct,
+  httpValidateProductPayload,
   httpViewSellerProducts,
 } from "../../../controllers/products/products.controller.js";
 import {
@@ -51,13 +52,13 @@ sellerRouter.get("/seller/:sellerId/products", httpViewSellerProducts);
 sellerRouter.post(
   "/seller/:sellerId/products",
   [deserializeUser, requireUser],
-  [productImagesUpload, uploadB2],
+  [productImagesUpload, httpValidateProductPayload, uploadB2],
   httpCreateProduct
 );
 sellerRouter.patch(
   "/seller/:sellerId/products/:productId",
   [deserializeUser, requireUser],
-  [productImagesUpload, uploadB2],
+  [productImagesUpload, httpValidateProductPayload, uploadB2],
   httpUpdateProduct
 );
 sellerRouter.delete(

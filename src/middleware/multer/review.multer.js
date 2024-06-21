@@ -14,12 +14,12 @@ function checkFileType(req, file, cb) {
   if (!validation.success) {
     const { errors } = validation.error;
     const message = validationErrorBuilder(errors);
-    cb(JSON.stringify({ code: 400, message }), false);
+    cb(JSON.stringify({ success: false, message }), false);
   }
 
   // Validate the file
   if (!file) {
-    cb({ code: 400, message: "Please provide the File" }, false);
+    cb({ success: false, message: "Please provide the File" }, false);
   }
 
   // Allowed ext
