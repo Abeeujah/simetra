@@ -3,6 +3,7 @@ import {
   httpDeleteRider,
   httpSetupRider,
   httpUpdateRider,
+  httpValidateRiderPayload,
   httpViewRiderById,
   httpViewRiders,
 } from "../../../controllers/rider/rider.controller.js";
@@ -18,7 +19,7 @@ const riderRouter = Router();
 riderRouter.post(
   "/rider",
   [deserializeUser, requireUser],
-  [riderUpload, uploadB2],
+  [riderUpload, httpValidateRiderPayload, uploadB2],
   httpSetupRider
 );
 riderRouter.get("/rider", [deserializeUser, requireUser], httpViewRiders);
@@ -30,7 +31,7 @@ riderRouter.get(
 riderRouter.patch(
   "/rider/:riderId",
   [deserializeUser, requireUser],
-  [riderUpload, uploadB2],
+  [riderUpload, httpValidateRiderPayload, uploadB2],
   httpUpdateRider
 );
 riderRouter.delete(

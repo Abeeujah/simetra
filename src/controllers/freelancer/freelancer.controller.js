@@ -110,7 +110,7 @@ export async function httpUpdateFreelancer(req, res) {
       ...uploadMapping,
     };
 
-    const freelancer = await updateFreelancer({ _id: id }, updateFreelancerDto);
+    const freelancer = await updateFreelancer({ userProfile: id }, updateFreelancerDto);
 
     if (!freelancer) {
       return res

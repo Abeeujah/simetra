@@ -1,3 +1,4 @@
+import { UserModel } from "../models/auth/user.model.js";
 import { RiderModel } from "../models/rider/rider.model.js";
 
 export async function setupRider(riderDto, user) {
@@ -8,28 +9,9 @@ export async function setupRider(riderDto, user) {
       return false;
     }
 
-    user.rider = rider._id;
-    await user.save();
+    await UserModel.findOneAndUpdate({ _id: user._id }, { rider: rider._id });
 
-    const {
-      vehicleModel,
-      vehicleName,
-      vehicleDocument,
-      vehiclePicture,
-      vehiclePlateNumber,
-      riderPicture,
-      location,
-    } = rider;
-
-    return {
-      vehicleModel,
-      vehicleName,
-      vehicleDocument,
-      vehiclePicture,
-      vehiclePlateNumber,
-      riderPicture,
-      location,
-    };
+    return rider.toJSON();
   } catch (error) {
     console.error({ dbError: error.message });
     throw new Error("Failed to setup rider profile");

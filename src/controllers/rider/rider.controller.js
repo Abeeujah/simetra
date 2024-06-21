@@ -10,7 +10,6 @@ import {
   setupRider,
   updateRider,
 } from "../../services/rider.services.js";
-import { validateRequest } from "../../services/user-info.services.js";
 import { validationErrorBuilder } from "../../utils/validation.util.js";
 
 export async function httpSetupRider(req, res) {
@@ -85,7 +84,7 @@ export async function httpViewRiderById(req, res) {
 
 export async function httpViewRiders(req, res) {
   try {
-    const { riders, cursor } = getRiders(req.query?.cursor);
+    const { riders, cursor } = await getRiders(req.query?.cursor);
 
     if (!cursor) {
       return res
@@ -100,23 +99,14 @@ export async function httpViewRiders(req, res) {
 }
 
 export async function httpUpdateRider(req, res) {
-  const { riderId } = req.params;
-  const { email } = req.user;
+  const { id } = req.user;
   const { uploadMapping } = res.locals;
 
   try {
-    const whoAmI = await validateRequest(email, "rider");
-
-    if (whoAmI.toString() !== riderId) {
-      return res
-        .status(403)
-        .json({ success: false, message: "Forbidden to perform this action." });
-    }
-
     const { data } = req;
     const updateRiderDto = { ...data, ...uploadMapping };
 
-    const rider = await updateRider({ _id: riderId }, updateRiderDto);
+    const rider = await updateRider({ userProfile: id }, updateRiderDto);
 
     if (!rider) {
       return res
