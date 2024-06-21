@@ -1,25 +1,10 @@
 import multer from "multer";
-import {
-  riderSetupSchema,
-  updateRiderSchema,
-} from "../../schemas/rider.schema.js";
 
 function checkFileType(req, file, cb) {
-  // Validate req.body
-  const validator =
-    req.method === "POST" ? riderSetupSchema : updateRiderSchema;
-  const validation = validator.safeParse(req.body);
-
-  if (!validation.success) {
-    const { errors } = validation.error;
-    const message = validationErrorBuilder(errors);
-    cb(JSON.stringify({ code: 400, message }), false);
-  }
-
   // Validate the file
   if (!file) {
     cb(
-      JSON.stringify({ code: 400, message: "Please provide the File" }),
+      JSON.stringify({ success: false, message: "Please provide the File" }),
       false
     );
   }
@@ -36,7 +21,7 @@ function checkFileType(req, file, cb) {
   } else {
     cb(
       JSON.stringify({
-        code: 400,
+        success: false,
         message: "Error: Invalid file type provided, Images only!",
       }),
       false

@@ -49,7 +49,7 @@ export async function deserializeUser(req, res, next) {
   // console.log({ otpToken, accessToken, refreshToken, token });
 
   if (!otpToken && !refreshToken && !accessToken && !token) {
-    return res.status(401).json({ error: "Unauthorized" });
+    return res.status(401).json({ success: false, message: "Unauthorized" });
   }
 
   const { decoded, expired } = await verifyJwt(
@@ -62,7 +62,7 @@ export async function deserializeUser(req, res, next) {
     const exists = await findUserByEmail(email, false);
 
     if (!exists) {
-      return res.status(403).json({ error: "Forbidden" });
+      return res.status(403).json({ success: false, message: "Forbidden" });
     }
 
     req.user = decoded.user;
@@ -88,7 +88,7 @@ export async function requireUser(req, res, next) {
     const exists = await findUserByEmail(user.email);
 
     if (!user && !exists) {
-      return res.status(401).json({ error: "Unauthorized" });
+      return res.status(401).json({ success: false, message: "Unauthorized" });
     }
 
     return next();

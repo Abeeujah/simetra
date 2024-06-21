@@ -38,7 +38,10 @@ export async function setupRider(riderDto, user) {
 
 export async function getRiderByID(id, email) {
   try {
-    const rider = await RiderModel.findById(id).populate("userProfile");
+    const rider = await RiderModel.findById(id).populate({
+      path: "userProfile",
+      populate: { path: "profile" },
+    });
 
     if (!rider) {
       return false;
@@ -95,7 +98,7 @@ export async function updateRider(filter, update) {
 
 export async function deleteRider(filter) {
   try {
-    const rider = await RiderModel.findByIdAndDelete(filter);
+    const rider = await RiderModel.findOneAndDelete(filter);
 
     if (!rider) {
       return false;
@@ -120,7 +123,8 @@ function responseBuilder(rider, email) {
     totalEarnings,
     userProfile,
   } = rider;
-  const { name, gender, address, phone } = userProfile;
+  const { name } = userProfile;
+  const { gender, address, phone } = userProfile.profile;
   const date = new Date(createdAt);
   const dateRegistered = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
 

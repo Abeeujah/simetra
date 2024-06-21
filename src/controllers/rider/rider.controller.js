@@ -14,42 +14,14 @@ import { validateRequest } from "../../services/user-info.services.js";
 import { validationErrorBuilder } from "../../utils/validation.util.js";
 
 export async function httpSetupRider(req, res) {
-  if (!req.user && !res.locals.user) {
-    // Get the user from the session
-    return res.status(401).json({ success: false, message: "Unauthorized" });
-  }
-
-  const user = req.user || res.local.user;
-  const { email } = user;
-
-  // Validate the request
-  const validation = riderSetupSchema.safeParse(req.body);
-
-  if (!validation.success) {
-    const { errors } = validation.error;
-    console.error({ riderSetupSchemaError: errors });
-    const message = validationErrorBuilder(errors);
-    return res.status(400).json({ success: false, message });
-  }
-
-  const { location, vehicleName, vehiclePlateNumber, vehicleModel } =
-    validation.data;
+  const { email } = req.user;
 
   // Extract the image urls from res.locals
+  const { data } = req;
   const { uploadMapping } = res.locals;
-  const { riderPicture, vehiclePicture, vehicleDocument } = uploadMapping;
 
   // Create the entity
-  const riderDto = {
-    location,
-    vehicleName,
-    vehiclePlateNumber,
-    vehicleModel,
-    userEmail: email,
-    riderPicture,
-    vehiclePicture,
-    vehicleDocument,
-  };
+  const riderDto = { ...data, ...uploadMapping };
 
   try {
     const user = await findUserByEmail(email, true);
@@ -93,6 +65,14 @@ export async function httpViewRiderById(req, res) {
     const { riderId } = req.params;
     const { email } = req.user;
     const rider = await getRiderByID(riderId, email);
+
+    if (!rider) {
+      return res.status(404).json({
+        success: false,
+        message: "No rider profile associated with this identifier.",
+      });
+    }
+
     return res.status(200).json({
       success: true,
       message: "Rider retrieved successfully.",
@@ -107,17 +87,12 @@ export async function httpViewRiders(req, res) {
   try {
     const { riders, cursor } = getRiders(req.query?.cursor);
 
-    if (!riders.length && !cursor) {
+    if (!cursor) {
       return res
-        .status(200)
-        .json({ success: false, message: "No more riders left to display." });
+        .status(404)
+        .json({ success: false, message: "No rider available to display." });
     }
 
-    if (!riders.length) {
-      return res
-        .status(200)
-        .json({ success: false, message: "No riders available." });
-    }
     return res.status(200).json({ riders, cursor });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
@@ -128,9 +103,6 @@ export async function httpUpdateRider(req, res) {
   const { riderId } = req.params;
   const { email } = req.user;
   const { uploadMapping } = res.locals;
-  const riderPicture = uploadMapping?.riderPicture?.[0];
-  const vehiclePicture = uploadMapping?.vehiclePicture?.[0];
-  const vehicleDocument = uploadMapping?.vehicleDocument?.[0];
 
   try {
     const whoAmI = await validateRequest(email, "rider");
@@ -141,21 +113,8 @@ export async function httpUpdateRider(req, res) {
         .json({ success: false, message: "Forbidden to perform this action." });
     }
 
-    const validation = updateRiderSchema.safeParse(req.body);
-    if (!validation.success) {
-      const { errors } = validation.error;
-      console.error({ riderSetupSchemaError: errors });
-      const message = validationErrorBuilder(errors);
-      return res.status(400).json({ success: false, message });
-    }
-
-    const { data } = validation;
-    const updateRiderDto = {
-      ...data,
-      riderPicture,
-      vehiclePicture,
-      vehicleDocument,
-    };
+    const { data } = req;
+    const updateRiderDto = { ...data, ...uploadMapping };
 
     const rider = await updateRider({ _id: riderId }, updateRiderDto);
 
@@ -177,19 +136,10 @@ export async function httpUpdateRider(req, res) {
 }
 
 export async function httpDeleteRider(req, res) {
-  const { email } = req.user;
-  const { riderId } = req.params;
+  const { id } = req.user;
 
   try {
-    const whoAmI = await validateRequest(email, "rider");
-
-    if (whoAmI.toString() !== riderId) {
-      return res
-        .status(403)
-        .json({ success: false, message: "Forbidden to perform this action." });
-    }
-
-    const rider = await deleteRider(riderId);
+    const rider = await deleteRider({ userProfile: id });
 
     if (!rider) {
       return res
@@ -200,10 +150,26 @@ export async function httpDeleteRider(req, res) {
     return res.status(200).json({
       success: true,
       message: "Delete rider successful.",
-      rider,
+      data: { rider },
     });
   } catch (error) {
     console.error({ serverError: error });
     return res.status(500).json({ success: false, message: error.message });
   }
+}
+
+export async function httpValidateRiderPayload(req, res, next) {
+  // Validate req.body
+  const validator =
+    req.method === "POST" ? riderSetupSchema : updateRiderSchema;
+  const validation = validator.safeParse(req.body);
+
+  if (!validation.success) {
+    const { errors } = validation.error;
+    const message = validationErrorBuilder(errors);
+    cb(JSON.stringify({ success: false, message }), false);
+  }
+
+  req.data = validation.data;
+  return next();
 }

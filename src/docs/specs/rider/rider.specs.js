@@ -1,14 +1,14 @@
 /**
  * @openapi
- * /api/accounts/freelancer:
- *  # Register Freelancer Endpoint
+ * /api/accounts/rider:
+ *  # Register Rider Endpoint
  *  post:
- *      description: This endpoint allows a user to register to become a validated freelancer on the platform.
- *      summary: Register to become a Freelancer.
- *      tags: [Freelancer]
- *      operationId: freelancerSetup
+ *      description: This endpoint allows a user to register to become a verified rider on the platform.
+ *      summary: Register a Rider
+ *      tags: [Rider]
+ *      operationId: riderSetup
  *      requestBody:
- *          $ref: '#components/requestBodies/FreelancerSetup'
+ *          $ref: '#components/requestBodies/RiderSetup'
  *      responses:
  *          '201':
  *              $ref: '#components/responses/Success'
@@ -23,12 +23,12 @@
  *          '500':
  *              $ref: '#components/responses/InternalServerError'
  * 
- *  # Retrieve all Freelancers
+ *  # Retrieve all Riders
  *  get:
- *      description: This endpoint retrieves all freelancers on the platform, using cursor based pagination to limit payload size.
- *      summary: View all Freelancers.
- *      tags: [Freelancer]
- *      operationId: viewAllFreelancers
+ *      description: This endpoint retrieves all riders on the platform, using cursor based pagination to limit payload size.
+ *      summary: View all Riders
+ *      tags: [Rider]
+ *      operationId: viewAllRiders
  *      parameters:
  *          -   in: query
  *              name: cursor
@@ -47,21 +47,21 @@
  *          '500':
  *              $ref: '#components/responses/InternalServerError'
  * 
- * /api/accounts/freelancer/{freelancerId}:
+ * /api/accounts/rider/{riderId}:
  *  parameters:
- *      - name: freelancerId
- *        in: path
- *        required: true
- *        description: The freelancer identifier, as freelancerId.
- *        schema:
- *          type: string
+ *      -   name: riderId
+ *          in: path
+ *          required: true
+ *          description: The rider identifier, as riderId.
+ *          schema:
+ *              type: string
  * 
- *  # View a Freelancer
+ *  # View a Rider
  *  get:
- *      description: This endpoint retrieves the freelancer profile identified with the given freelancerId.
- *      summary: View a Freelancer Profile.
- *      tags: [Freelancer]
- *      operationId: viewAFreelancer
+ *      description: This endpoint retrieves the rider profile, as identified by the riderId.
+ *      summary: View a Rider.
+ *      tags: [Rider]
+ *      operationId: viewARider
  *      responses:
  *          '200':
  *              $ref: '#components/responses/Success'
@@ -74,14 +74,14 @@
  *          '500':
  *              $ref: '#components/responses/InternalServerError'
  * 
- *  # Delete a Freelancer
+ *  # Delete a Rider
  *  delete:
- *      description: This endpoint deletes a freelancer identified with the freelancer identifier.
- *      summary: Delete your Freelancer Profile.
- *      tags: [Freelancer]
- *      operationId: deleteAFreelancer
+ *      description: This endpoint allows you to delete your rider profile, as identified by the riderId.
+ *      summary: Delete a Rider.
+ *      tags: [Rider]
+ *      operationId: deleteARider
  *      responses:
- *          '204':
+ *          '200':
  *              $ref: '#components/responses/Success'
  *          '401':
  *              $ref: '#components/responses/Unauthorized'
@@ -92,19 +92,17 @@
  *          '500':
  *              $ref: '#components/responses/InternalServerError'
  * 
- *  # Update a Freelancer
+ *  # Update a Rider
  *  patch:
- *      description: This endpoint allows a freelancer identified by the freelancerId to update his freelancer profile.
- *      summary: Update your Freelancer Profile.
- *      tags: [Freelancer]
- *      operationId: updateAFreelancer
+ *      description: This endpoint allows you to update your rider profile, as identified by the riderId.
+ *      summary: Update your Rider Profile.
+ *      tags: [Rider]
+ *      operationId: updateARider
  *      requestBody:
- *          $ref: '#components/requestBodies/FreelancerUpdate'
+ *          $ref: '#components/requestBodies/RiderUpdate'
  *      responses:
  *          '200':
  *              $ref: '#components/responses/Success'
- *          '400':
- *              $ref: '#components/responses/BadRequest'
  *          '401':
  *              $ref: '#components/responses/Unauthorized'
  *          '403':

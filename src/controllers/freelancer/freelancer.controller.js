@@ -60,17 +60,11 @@ export async function httpGetAllFreelancers(req, res) {
   try {
     const { freelancers, cursor } = await getAllFreelancers(req.query?.cursor);
 
-    if (!freelancers.length && !cursor) {
+    if (!cursor) {
       return res.status(404).json({
         success: false,
-        message: "No more freelancers listing available to display.",
+        message: "No freelancer available to display.",
       });
-    }
-
-    if (!freelancers.length) {
-      return res
-        .status(404)
-        .json({ success: false, message: "No freelancer available." });
     }
 
     return res.status(200).json({
@@ -110,19 +104,7 @@ export async function httpUpdateFreelancer(req, res) {
   const { uploadMapping } = res.locals;
 
   try {
-    const validation = updateFreelancerSchema.safeParse(req.body);
-
-    if (!validation.success) {
-      const { errors } = validation.error;
-      console.error({ freelancerUpdate: errors });
-      const message = validationErrorBuilder(errors);
-      return res.status(400).json({
-        success: false,
-        message,
-      });
-    }
-
-    const { data } = validation;
+    const { data } = req;
     const updateFreelancerDto = {
       ...data,
       ...uploadMapping,

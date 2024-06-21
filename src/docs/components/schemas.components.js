@@ -171,7 +171,7 @@
  *                  format: binary
  *                  description: The profile photo.
  * 
- *      # Freelancer
+ *      # Freelancer Schema
  *      Freelancer:
  *          type: object
  *          properties:
@@ -227,4 +227,47 @@
  *              - officeAddress
  *              - coverBanner
  *              - profilePhoto
+ * 
+ *      # Rider Schema
+ *      Rider:
+ *          type: object
+ *          properties:
+ *              vehicleModel:
+ *                  type: string
+ *                  description: The model of your vehicle.
+ *              vehicleName:
+ *                  type: string
+ *                  description: The name of your vehicle.
+ *              vehiclePlateNumber:
+ *                  type: string
+ *                  description: The number plate on your vehicle.
+ *              location:
+ *                  type: string
+ *                  description: Your domicile location for easy rides and delivery pickups.
+ *              riderPicture:
+ *                  type: string
+ *                  format: binary
+ *                  description: A clear image of you to be displayed on your profile and ride requests.
+ *              vehiclePicture:
+ *                  type: string
+ *                  format: binary
+ *                  description: A clear image of your vehicle to be displayed on your profile and ride requests.
+ *              vehicleDocument:
+ *                  type: string
+ *                  format: binary
+ *                  description: A document confirming the vehicle is registered and licensed to make trips.
+ * 
+ *      # Rider Setup
+ *      RiderSetup:
+ *          type: object
+ *          allOf:
+ *              - $ref: '#components/schemas/Rider'
+ *          required:
+ *              - vehicleModel
+ *              - vehicleName
+ *              - vehiclePlateNumber
+ *              - location
+ *              - riderPicture
+ *              - vehiclePicture
+ *              - vehicleDocument
  */

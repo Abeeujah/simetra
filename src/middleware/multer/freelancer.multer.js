@@ -3,7 +3,7 @@ import multer from "multer";
 function checkFileType(req, file, cb) {
   // Validate the file
   if (!file) {
-    cb({ code: 400, message: "Please provide the File" }, false);
+    cb({ success: false, message: "Please provide the File" }, false);
   }
 
   // Allowed ext
@@ -18,7 +18,7 @@ function checkFileType(req, file, cb) {
   } else {
     cb(
       {
-        code: 400,
+        success: false,
         message: "Error: Invalid file type provided, Images only!",
       },
       false

@@ -122,7 +122,7 @@
  * 
  *      # Setup Freelancer Account
  *      FreelancerSetup:
- *          description: Setup a Freelancer Account.
+ *          description: Setup your Freelancer Account.
  *          required: true
  *          content:
  *              multipart/form-data:
@@ -137,4 +137,22 @@
  *              multipart/form-data:
  *                  schema:
  *                      $ref: '#components/schemas/Freelancer'
+ * 
+ *      # Setup Rider Account
+ *      RiderSetup:
+ *          description: Setup your Rider Account.
+ *          required: true
+ *          content:
+ *              multipart/form-data:
+ *                  schema:
+ *                      $ref: '#components/schemas/RiderSetup'
+ * 
+ *      # Update Rider Account
+ *      RiderUpdate:
+ *          description: Update your Rider Account.
+ *          required: true
+ *          content:
+ *              multipart/form-data:
+ *                  schema:
+ *                      $ref: '#components/schemas/Rider'
  */
