@@ -155,4 +155,22 @@
  *              multipart/form-data:
  *                  schema:
  *                      $ref: '#components/schemas/Rider'
+ * 
+ *      # Setup Seller Account
+ *      SellerSetup:
+ *          description: Setup your Seller Account.
+ *          required: true
+ *          content:
+ *              multipart/form-data:
+ *                  schema:
+ *                      $ref: '#components/schemas/SellerSetup'
+ * 
+ *      # Update Seller Account
+ *      SellerUpdate:
+ *          description: Update your Seller Account.
+ *          required: true
+ *          content:
+ *              multipart/form-data:
+ *                  schema:
+ *                      $ref: '#components/schemas/Seller'
  */

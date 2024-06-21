@@ -270,4 +270,38 @@
  *              - riderPicture
  *              - vehiclePicture
  *              - vehicleDocument
+ * 
+ *      # Seller Schema
+ *      Seller:
+ *          type: object
+ *          properties:
+ *              storeName:
+ *                  type: string
+ *                  description: Your unique storefront name.
+ *              itemsType:
+ *                  type: string
+ *                  description: The type of items you're trying to sell on the platform.
+ *              location:
+ *                  type: string
+ *                  description: Physical location where your store is located.
+ *              profilePhoto:
+ *                  type: string
+ *                  format: binary
+ *                  description: A display photo for your storefront page.
+ *              coverBanner:
+ *                  type: string
+ *                  format: binary
+ *                  description: A cover photo for your storefront page.
+ * 
+ *      # Seller Setup
+ *      SellerSetup:
+ *          type: object
+ *          allOf:
+ *              - $ref: '#components/schemas/Seller'
+ *          required:
+ *              - storeName
+ *              - itemsType
+ *              - location
+ *              - profilePhoto
+ *              - coverBanner
  */

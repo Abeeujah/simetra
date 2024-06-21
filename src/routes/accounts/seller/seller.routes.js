@@ -7,9 +7,11 @@ import {
 } from "../../../controllers/products/products.controller.js";
 import {
   httpDeleteSeller,
+  httpGetAllSellers,
   httpGetSellerById,
   httpSellerSetup,
   httpUpdateSeller,
+  httpValidateSellerPayload,
 } from "../../../controllers/seller/seller.controller.js";
 import { uploadB2 } from "../../../middleware/backblaze.middleware.js";
 import {
@@ -24,9 +26,10 @@ const sellerRouter = Router();
 sellerRouter.post(
   "/seller",
   [deserializeUser, requireUser],
-  [sellerUpload, uploadB2],
+  [sellerUpload, httpValidateSellerPayload, uploadB2],
   httpSellerSetup
 );
+sellerRouter.get("/seller", [deserializeUser, requireUser], httpGetAllSellers);
 sellerRouter.get(
   "/seller/:sellerId",
   [deserializeUser, requireUser],
@@ -35,7 +38,7 @@ sellerRouter.get(
 sellerRouter.patch(
   "/seller/:sellerId",
   [deserializeUser, requireUser],
-  [sellerUpload, uploadB2],
+  [sellerUpload, httpValidateSellerPayload, uploadB2],
   httpUpdateSeller
 );
 sellerRouter.delete(

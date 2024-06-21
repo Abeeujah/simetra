@@ -1,3 +1,4 @@
+import { UserModel } from "../models/auth/user.model.js";
 import { SellerModel } from "../models/seller/seller.model.js";
 
 export async function setupSeller(sellerDto, user) {
@@ -8,12 +9,9 @@ export async function setupSeller(sellerDto, user) {
       return false;
     }
 
-    user.seller = seller._id;
-    await user.save();
+    await UserModel.findOneAndUpdate({ _id: user._id }, { seller: seller._id });
 
-    const { storeName, itemsType, coverBanner, profilePhoto } = seller;
-
-    return { storeName, itemsType, coverBanner, profilePhoto };
+    return seller.toJSON();
   } catch (error) {
     console.error({ setupSellerError: error });
     if (error.keyValue) {
@@ -56,9 +54,9 @@ export async function updateSeller(filter, update) {
   }
 }
 
-export async function deleteSeller(sellerId) {
+export async function deleteSeller(filter) {
   try {
-    const seller = await SellerModel.findByIdAndDelete(sellerId);
+    const seller = await SellerModel.findOneAndDelete(filter);
 
     if (!seller) {
       return false;
@@ -67,6 +65,32 @@ export async function deleteSeller(sellerId) {
     return seller.toJSON();
   } catch (error) {
     console.error({ deleteSellerError: error });
+    throw new Error(error.message);
+  }
+}
+
+export async function getAllSellers(next) {
+  try {
+    const filterQuery = {};
+
+    if (next) {
+      filterQuery._id = { $lt: next };
+    }
+
+    const sellers = await SellerModel.find(filterQuery, {
+      storeName: 1,
+      itemsType: 1,
+      profilePhoto: 1,
+    })
+      .sort({ _id: -1 })
+      .limit(20);
+
+    const pointer = sellers.length;
+    const cursor = pointer ? sellers[pointer - 1]._id : "";
+
+    return { sellers, cursor };
+  } catch (error) {
+    console.error({ getAllSellersError: error });
     throw new Error(error.message);
   }
 }

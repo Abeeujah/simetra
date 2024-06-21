@@ -1,22 +1,6 @@
 import multer from "multer";
-import {
-  sellerSetupSchema,
-  updateSellerSchema,
-} from "../../schemas/seller.schema.js";
 
 function checkFileType(req, file, cb) {
-  // Validate req.body
-  const validator =
-    req.method === "POST" ? sellerSetupSchema : updateSellerSchema;
-  const validation = validator.safeParse(req.body);
-
-  if (!validation.success) {
-    cb(
-      JSON.stringify({ code: 400, message: "Validation errors, Bad request" }),
-      false
-    );
-  }
-
   // Validate the file
   if (!file) {
     cb(
