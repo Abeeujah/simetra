@@ -128,4 +128,13 @@
  *              multipart/form-data:
  *                  schema:
  *                      $ref: '#components/schemas/FreelancerSetup'
+ * 
+ *      # Update Freelancer Account
+ *      FreelancerUpdate:
+ *          description: Update your Freelancer Account.
+ *          required: true
+ *          content:
+ *              multipart/form-data:
+ *                  schema:
+ *                      $ref: '#components/schemas/Freelancer'
  */

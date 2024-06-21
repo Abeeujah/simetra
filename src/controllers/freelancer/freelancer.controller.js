@@ -61,7 +61,7 @@ export async function httpGetAllFreelancers(req, res) {
     const { freelancers, cursor } = await getAllFreelancers(req.query?.cursor);
 
     if (!freelancers.length && !cursor) {
-      return res.status(204).json({
+      return res.status(404).json({
         success: false,
         message: "No more freelancers listing available to display.",
       });
@@ -69,7 +69,7 @@ export async function httpGetAllFreelancers(req, res) {
 
     if (!freelancers.length) {
       return res
-        .status(204)
+        .status(404)
         .json({ success: false, message: "No freelancer available." });
     }
 
@@ -108,8 +108,6 @@ export async function httpGetFreelancerById(req, res) {
 export async function httpUpdateFreelancer(req, res) {
   const { id } = req.user;
   const { uploadMapping } = res.locals;
-  const profilePhoto = uploadMapping?.profilePhoto;
-  const coverBanner = uploadMapping?.coverBanner;
 
   try {
     const validation = updateFreelancerSchema.safeParse(req.body);
@@ -128,8 +126,6 @@ export async function httpUpdateFreelancer(req, res) {
     const updateFreelancerDto = {
       ...data,
       ...uploadMapping,
-      profilePhoto,
-      coverBanner,
     };
 
     const freelancer = await updateFreelancer({ _id: id }, updateFreelancerDto);
@@ -163,13 +159,12 @@ export async function httpDeleteFreelancer(req, res) {
         .json({ success: false, message: "Freelancer not found." });
     }
 
-    return res.status(200).json({
+    return res.status(204).json({
       success: true,
       message: "Delete freelancer successful.",
       data: { freelancer },
     });
   } catch (error) {
-    console.error({ serverError: error });
     return res.status(500).json({ success: false, message: error.message });
   }
 }

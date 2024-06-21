@@ -44,18 +44,20 @@ export async function deserializeUser(req, res, next) {
   const otpToken = get(req, "cookies.otpToken");
   const accessToken = get(req, "cookies.accessToken");
   const refreshToken = get(req, "cookies.refreshToken");
-  console.log({ otpToken, accessToken, refreshToken });
+  const authHeader = req.headers.authorization;
+  const token = authHeader && authHeader.split(" ")[1];
+  // console.log({ otpToken, accessToken, refreshToken, token });
 
-  if (!otpToken && !refreshToken && !accessToken) {
+  if (!otpToken && !refreshToken && !accessToken && !token) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
   const { decoded, expired } = await verifyJwt(
-    otpToken || refreshToken || accessToken
+    otpToken || refreshToken || accessToken || token
   );
 
   if (decoded) {
-    console.log(decoded)
+    // console.log({ decoded });
     const { email } = decoded.user;
     const exists = await findUserByEmail(email, false);
 
@@ -71,7 +73,7 @@ export async function deserializeUser(req, res, next) {
   if (expired && refreshToken) {
     const renewToken = reissueAccessToken(refreshToken);
     res.cookie("accessToken", renewToken, accessTokenOptions);
-    const result = verifyJwt(renewToken);
+    const result = await verifyJwt(renewToken);
     req.user = result.decoded;
     res.locals.user = decoded;
     return next();

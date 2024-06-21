@@ -171,16 +171,9 @@
  *                  format: binary
  *                  description: The profile photo.
  * 
- *      # Freelancer Setup
- *      FreelancerSetup:
+ *      # Freelancer
+ *      Freelancer:
  *          type: object
- *          required:
- *              - serviceType
- *              - bio
- *              - experienceYears
- *              - officeAddress
- *              - coverBanner
- *              - profilePhoto
  *          properties:
  *              serviceType:
  *                  type: string
@@ -221,4 +214,17 @@
  *                  type: string
  *                  format: binary
  *                  description: The fourth image reference showcasing your past works.
+ * 
+ *      # Freelancer Setup
+ *      FreelancerSetup:
+ *          type: object
+ *          allOf:
+ *              - $ref: '#components/schemas/Freelancer'
+ *          required:
+ *              - serviceType
+ *              - bio
+ *              - experienceYears
+ *              - officeAddress
+ *              - coverBanner
+ *              - profilePhoto
  */

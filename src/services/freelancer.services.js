@@ -22,9 +22,10 @@ export async function setupFreelancer(freelancerDto, user) {
 // Get a freelancer by ID
 export async function getFreelancerByID(id, email) {
   try {
-    const freelancer = await FreelancerModel.findById(id).populate(
-      "userProfile"
-    );
+    const freelancer = await FreelancerModel.findById(id).populate({
+      path: "userProfile",
+      populate: { path: "profile" },
+    });
 
     if (!freelancer) {
       return false;
@@ -110,7 +111,8 @@ function responseBuilder(freelancer, email) {
     userProfile,
   } = freelancer;
 
-  const { name, gender, phone, address, createdAt } = userProfile;
+  const { name, createdAt } = userProfile;
+  const { gender, phone, address } = userProfile.profile;
 
   const visitorResponse = {
     coverBanner,
