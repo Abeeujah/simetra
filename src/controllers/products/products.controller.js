@@ -58,7 +58,7 @@ export async function httpCreateProduct(req, res) {
     const product = await createProduct(productDto);
 
     if (!product) {
-      throw new Error(`Failed to add ${name} to inventory`);
+      throw new Error(`Failed to add ${data.name} to inventory`);
     }
 
     return res.status(201).json({
