@@ -304,4 +304,70 @@
  *              - location
  *              - profilePhoto
  *              - coverBanner
+ * 
+ *      # Product Categories
+ *      Category:
+ *          type: string
+ *          # FASHION | ELECTRONICS | FOOD | BEVERAGES | FURNITURE | MEDIA | BEAUTY | TOYS
+ *          enum:
+ *              - FASHION
+ *              - ELECTRONICS
+ *              - FOOD
+ *              - BEVERAGES
+ *              - FURNITURE
+ *              - MEDIA
+ *              - BEAUTY
+ *              - TOYS
+ * 
+ *      # Product Schema
+ *      Product:
+ *          type: object
+ *          properties:
+ *              name:
+ *                  type: string
+ *                  description: The name of the product you're listing for sale.
+ *              description:
+ *                  type: string
+ *                  description: A brief description of the product and its benefits.
+ *              price:
+ *                  type: string
+ *                  description: The amount you want to list the product at.
+ *              category:
+ *                  type: Category
+ *                  description: The category your product falls under, important for filtering search results. currently supported (FASHION | ELECTRONICS | FOOD | BEVERAGES | FURNITURE | MEDIA | BEAUTY | TOYS)
+ *              quantity:
+ *                  type: string
+ *                  description: The amount of the product you have in stock currently.
+ *              productImageI:
+ *                  type: string
+ *                  format: binary
+ *                  description: Image showcasing your product, will appear in cart, and search results.
+ *              productImageII:
+ *                  type: string
+ *                  format: binary
+ *                  description: Second image showcasing your product, in the product's detail view.
+ *              productImageIII:
+ *                  type: string
+ *                  format: binary
+ *                  description: Third image showcasing your product, in the product's detail view.
+ *              productImageIV:
+ *                  type: string
+ *                  format: binary
+ *                  description: Fourth image showcasing your product, in the product's detail view.
+ *              productImageV:
+ *                  type: string
+ *                  format: binary
+ *                  description: Fifth image showcasing your product, in the product's detail view.
+ * 
+ *      # Create Product
+ *      CreateProduct:
+ *          type: object
+ *          allOf:
+ *              - $ref: '#components/schemas/Product'
+ *          required:
+ *              - name
+ *              - description
+ *              - price
+ *              - category
+ *              - productImageI
  */

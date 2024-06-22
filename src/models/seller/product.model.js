@@ -21,7 +21,7 @@ export const productSchema = new Schema({
     max: 255,
   },
   quantity: { type: Number, min: 1 },
-  productImageI: { type: String, min: 3, max: 255 },
+  productImageI: { type: String, required: true, min: 3, max: 255 },
   productImageII: { type: String, min: 3, max: 255 },
   productImageIII: { type: String, min: 3, max: 255 },
   productImageIV: { type: String, min: 3, max: 255 },

@@ -81,6 +81,7 @@ export async function getAllSellers(next) {
       storeName: 1,
       itemsType: 1,
       profilePhoto: 1,
+      products: 1,
     })
       .sort({ _id: -1 })
       .limit(20);

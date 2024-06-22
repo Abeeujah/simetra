@@ -173,4 +173,13 @@
  *              multipart/form-data:
  *                  schema:
  *                      $ref: '#components/schemas/Seller'
+ * 
+ *      # List a Product
+ *      CreateProduct:
+ *          description: List a Product for sale.
+ *          required: true
+ *          content:
+ *              multipart/form-data:
+ *                  schema:
+ *                      $ref: '#components/schemas/CreateProduct'
  */
