@@ -182,4 +182,13 @@
  *              multipart/form-data:
  *                  schema:
  *                      $ref: '#components/schemas/CreateProduct'
+ * 
+ *      # Update a Product
+ *      UpdateProduct:
+ *          description: Update an already listed Product.
+ *          required: true
+ *          content:
+ *              multipart/form-data:
+ *                  schema:
+ *                      $ref: '#components/schemas/Product'
  */
