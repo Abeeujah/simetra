@@ -151,15 +151,8 @@ export async function httpViewAllProducts(req, res) {
   try {
     const { products, cursor } = await getAllProducts(data);
 
-    if (!products.length && !cursor) {
-      return res.status(200).json({
-        success: false,
-        message: "No more products listing available to display",
-      });
-    }
-
-    if (!products.length) {
-      return res.status(200).json({
+    if (!cursor) {
+      return res.status(404).json({
         success: false,
         message: "No product listing available to display",
       });

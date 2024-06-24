@@ -1,5 +1,8 @@
 import { z } from "zod";
-import { maxLengthMessage, minLengthMessage } from "../utils/validation.util.js";
+import {
+  maxLengthMessage,
+  minLengthMessage,
+} from "../utils/validation.util.js";
 
 export const shippingAddressSchema = z.object({
   country: z
@@ -19,3 +22,13 @@ export const shippingAddressSchema = z.object({
     .min(11, minLengthMessage("Phone number", 11))
     .max(14, maxLengthMessage("Phone number", 14)),
 });
+
+const itemSchema = z.object({
+  itemId: z.string().uuid(),
+  quantity: z
+    .string()
+    .transform((str) => parseInt(str, 10))
+    .refine((parsed) => parsed > 0, "Must be a positive integer"),
+});
+
+export const checkOutSchema = z.object({ items: z.array(itemSchema) });

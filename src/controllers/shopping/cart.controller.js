@@ -49,7 +49,7 @@ export async function httpRemoveItemFromCart(req, res) {
     const cart = await removeItemFromCart(id, itemId);
 
     if (!cart) {
-      return res.status(200).json({
+      return res.status(404).json({
         success: false,
         message: "No item removed.",
         data: { cart },

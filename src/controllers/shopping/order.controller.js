@@ -1,4 +1,7 @@
-import { shippingAddressSchema } from "../../schemas/address.schema.js";
+import {
+  checkOutSchema,
+  shippingAddressSchema,
+} from "../../schemas/address.schema.js";
 import {
   amountQuery,
   checkout,
@@ -11,9 +14,17 @@ import {
 import { validationErrorBuilder } from "../../utils/validation.util.js";
 
 export async function httpCheckout(req, res) {
+  const validation = checkOutSchema.safeParse(req.body);
+  if (!validation.success) {
+    const { errors } = validation.error;
+    console.error({ checkOutSchemaError: errors });
+    const message = validationErrorBuilder(errors);
+    return res.status(400).json({ success: false, message });
+  }
+
   try {
     const { id } = req.user;
-    const { items } = req.body;
+    const { items } = validation.data;
     const check = await checkout(id, items);
     res
       .status(200)
